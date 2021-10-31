@@ -167,6 +167,10 @@ const updateBook = (book) => new Promise((resolve, reject) => {
     thumbnail: book.thumbnail
   };
 
+  console.log("update");
+  console.log(query);
+  console.log(update);
+
   db.get("library").update(query, update, {replaceOne: true})
     .then(resolve);
 });

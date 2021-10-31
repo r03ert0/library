@@ -1,12 +1,15 @@
 /* eslint-disable no-sync */
 const fs = require('fs');
 const bookInfo = require('./book_info.js');
-// const booksCSV = fs.readFileSync('my_book_titles.tsv').toString();
 const querystring = require('querystring');
-// const books = booksCSV.split("\n").map((row)=> {
-//   const [path, authors, title] = row.split("\t");
-//   return { path, authors, title: title.trim() };
-// });
+
+const importBooks = (req, res) => {
+  // const booksCSV = fs.readFileSync('my_book_titles.tsv').toString();
+  // const books = booksCSV.split("\n").map((row)=> {
+  //   const [path, authors, title] = row.split("\t");
+  //   return { path, authors, title: title.trim() };
+  // });
+};
 
 const queryAllBooks = async (req, res) => {
   const { headers, method, url } = req;
@@ -50,7 +53,7 @@ const methodGet = (req, res, next) => {
   } else if (params.mode && params.mode === "remove") {
     removeBook(req, res);
   } else {
-    next();
+    return next();
   }
 };
 
@@ -63,7 +66,6 @@ const methodPost = async (req, res, next) => {
     var buffer = Buffer.concat(data);
     try {
       const book = JSON.parse(buffer);
-      console.log("book:", book);
       const result = await bookInfo.updateBook(book);
       console.log(result);
     } catch(err) {
@@ -77,15 +79,11 @@ const methodPost = async (req, res, next) => {
 module.exports = async (req, res, next) => {
   console.log("Method:", req.method);
 
-  if (req.method !== "GET" && req.method !== "HEAD") {
-    next();
-  }
-  
   if (req.method === "GET") {
     methodGet(req, res, next);
   } else if (req.method === "POST") {
     methodPost(req, res, next);
   } else {
-    next();
+    return next();
   }
 };
