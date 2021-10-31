@@ -24,13 +24,14 @@ const parseData = (data) => {
   }
 
   return parsedData;
-}
+};
 
 const getBookInfoFromDB = async (query) => {
   const info = await new Promise((resolve, reject) => {
-    db.get("library").findOne({path: query.path}).then((res) => {
-      resolve(res);
-    });
+    db.get("library").findOne({path: query.path})
+      .then((res) => {
+        resolve(res);
+      });
   });
 
   return info;
@@ -61,6 +62,7 @@ const getBookInfoFromDB = async (query) => {
 const getBookInfoFromGoogle = async (query) => {
   console.log("  Querying Google Books API");
 
+  let info;
   if (query.isbn) {
     console.log("  Query ISBN", query.isbn);
     info = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${query.isbn}`);
@@ -75,20 +77,19 @@ const getBookInfoFromGoogle = async (query) => {
 
   if (info.data && info.data.items) {
     return parseData(info.data.items);
-  } else {
-    console.log("  No data for", query);
   }
+  console.log("  No data for", query);
+
 };
 
-const addBookToDB = async (book) => {
-  return new Promise((resolve, reject) => {
-    db.get("library").insert(book).then(resolve);
-  });
-};
+const addBookToDB = (book) => new Promise((resolve, reject) => {
+  db.get("library").insert(book)
+    .then(resolve);
+});
 
 const getBookInfo = async (query) => {
   if(typeof query.path === "undefined") {
-    console.log("ERROR: Query does not contain path to book's pdf", query);
+    // console.log("ERROR: Query does not contain path to book's pdf", query);
 
     return;
   }
@@ -97,26 +98,28 @@ const getBookInfo = async (query) => {
   let info;
   info = await getBookInfoFromDB(query);
   if (info) {
-    console.log("  Found in local DB");
+    // console.log("  Found in local DB");
+
     return info;
   }
 
   // else, query google books
   info = await getBookInfoFromGoogle(query);
   if (info) {
-    console.log("Book found in Google Books: adding.");
+    // console.log("Book found in Google Books: adding.");
     info.path = query.path;
     addBookToDB(info);
 
     return info;
   }
 
-  console.log("Book unavailable: store an incomplete record");
+  // console.log("Book unavailable: store an incomplete record");
   info = query;
   info.recordIncomplete = true;
   addBookToDB(info);
+
   return info;
-}
+};
 
 const queryAllBooks = async (list) => {
   const allBooksInfo = [];
@@ -130,31 +133,30 @@ const queryAllBooks = async (list) => {
   }
 
   return allBooksInfo;
-}
-
-const updateBook = async (book) => {
-  return new Promise((resolve, reject) => {
-    if (!book.path) {
-      reject("ERROR: No path provided");
-    }
-
-    const query = {
-      path: book.path
-    };
-
-    const update = {
-      path: book.path,
-      title: book.title,
-      authors: book.authors,
-      industryIdentifiers: book.industryIdentifiers,
-      pageCount: book.pageCount,
-      dimensions: book.dimensions,
-      thumbnail: book.thumbnail
-    };
-
-    db.get("library").update(query, update, {replaceOne: true}).then(resolve);
-  });
 };
+
+const updateBook = (book) => new Promise((resolve, reject) => {
+  if (!book.path) {
+    reject(new Error("ERROR: No path provided"));
+  }
+
+  const query = {
+    path: book.path
+  };
+
+  const update = {
+    path: book.path,
+    title: book.title,
+    authors: book.authors,
+    industryIdentifiers: book.industryIdentifiers,
+    pageCount: book.pageCount,
+    dimensions: book.dimensions,
+    thumbnail: book.thumbnail
+  };
+
+  db.get("library").update(query, update, {replaceOne: true})
+    .then(resolve);
+});
 
 module.exports = {
   queryAllBooks,

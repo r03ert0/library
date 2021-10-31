@@ -13,11 +13,11 @@ const _displayQueryPanel = (el, title, authors, path) => {
   <input id="title" type="text" value="${title}" /><br />
   <b>Authors</b><br />
   <input id="authors" type="text" value="${
-    (typeof(authors)==="string")?authors:authors.join(", ")
-  }" />
+  (typeof (authors)==="string")?authors:authors.join(", ")
+}" />
   `;
   const queryButton = document.createElement("button");
-  queryButton.innerHTML = "Query"
+  queryButton.innerHTML = "Query";
   queryButton.addEventListener("click", () => {
     const newTitle = queryEl.querySelector("#title").value;
     const newAuthors = queryEl.querySelector("#authors").value;
@@ -26,7 +26,7 @@ const _displayQueryPanel = (el, title, authors, path) => {
   });
   queryEl.appendChild(queryButton);
   el.appendChild(queryEl);
-}
+};
 
 const _displayBookQueryResult = (el, json, path) => {
   const contentDiv = document.createElement("div");
@@ -56,7 +56,7 @@ const _displayBookQueryResult = (el, json, path) => {
   buttonUpdate.addEventListener("click", async () => {
     const options = document.querySelectorAll('input[name=update]');
     let selectedIndex = -1;
-    for(let i = 0; i < options.length; i++){
+    for(let i = 0; i < options.length; i++) {
       if(options[i].checked) {
         selectedIndex = i;
         break;
@@ -66,8 +66,6 @@ const _displayBookQueryResult = (el, json, path) => {
       return;
     }
 
-    console.log("Update entry for path", path);
-    console.log("Values:", );
     const item = json.items[selectedIndex];
     const book = {
       path,
@@ -76,7 +74,7 @@ const _displayBookQueryResult = (el, json, path) => {
       authors: item.volumeInfo.authors,
       pageCount: item.volumeInfo.pageCount,
       dimensions: item.volumeInfo.dimensions
-    }
+    };
     if(item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail) {
       book.thumbnail = item.volumeInfo.imageLinks.thumbnail;
     }
@@ -123,43 +121,41 @@ const updateBook = async ({title, authors, path}) => {
   }
 };
 
+const _addButton = (el, name, fn) => {
+  const button = document.createElement("button");
+  button.innerHTML = name;
+  button.addEventListener("click", fn);
+  el.appendChild(button);
+};
+
 const displayAllBooks = () => {
   for (const [i, book] of books.entries()) {
     const el = document.createElement("div");
     el.classList.add("book");
+
     if(book.recordIncomplete) {
       el.classList.add("incomplete");
     }
-    if(book.thumbnail) {
-      el.innerHTML = `<div class="img-div"><img src="${book.thumbnail.replace("http:", "https:")}" /></div>`;
-    } else {
-      el.innerHTML = `<div class="img-div"></div>`;
-    }
+
+    el.innerHTML = book.thumbnail?
+      `<div class="img-div"><img src="${book.thumbnail.replace("http:", "https:")}" /></div>`:
+      `<div class="img-div"></div>`;
+
     el.innerHTML += `<h2>${i+1}. ${book.title}</h2>`;
-    if(book.authors && typeof book.authors === 'object') {
-      el.innerHTML += `<p>${book.authors.join(", ")}</p>`;
+
+    if(book.authors) {
+      el.innerHTML += (typeof book.authors === 'object')?
+        `<p>${book.authors.join(", ")}</p>`:
+        `<p>${book.authors}</p>`;
     }
-    if(book.authors && typeof book.authors === 'string') {
-      el.innerHTML += `<p>${book.authors}</p>`;
-    }
+
     if(book.path) {
       el.innerHTML += `<p class="path">${book.path}</p>`;
     }
 
-    const openButtonEl = document.createElement("button");
-    openButtonEl.innerHTML = "Open";
-    openButtonEl.addEventListener("click", () => { openBook(book.path); });
-    el.appendChild(openButtonEl);
-
-    const removeButtonEl = document.createElement("button");
-    removeButtonEl.innerHTML = "Remove";
-    removeButtonEl.addEventListener("click", () => { removeBook(book.path); });
-    el.appendChild(removeButtonEl);
-
-    const updateButtonEl = document.createElement("button");
-    updateButtonEl.innerHTML = "Update";
-    updateButtonEl.addEventListener("click", () => { updateBook(book); });
-    el.appendChild(updateButtonEl);
+    _addButton(el, "Open", () => { openBook(book.path); });
+    _addButton(el, "Remove", () => { /*removeBook(book.path);*/ });
+    _addButton(el, "Update", () => { updateBook(book); });
 
     document.querySelector("body").appendChild(el);
   }
@@ -171,12 +167,13 @@ const queryAllBooks = async () => {
   const res = await fetch(url);
   const result = await res.json();
   books = result.body;
+
   return books;
-}
+};
 
 const init = async () => {
   books = await queryAllBooks();
   displayAllBooks();
-}
+};
 
 init();
