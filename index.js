@@ -1,7 +1,7 @@
 let books;
 
 const openBook = (path) => {
-  const url = location.href + `index.html?mode=read&path=${path}`;
+  const url = location.href + `index.html?mode=read&path=${escape(path)}`;
   location = url;
 };
 
@@ -105,6 +105,17 @@ const _displayEmptyQueryResult = (el) => {
   el.appendChild(buttonCancel);
 };
 
+const removeBook = async ({path}) => {
+  // eslint-disable-next-line no-alert
+  const answer = confirm("Confirm removal");
+  if (!answer) {
+    return;
+  }
+  const url = location.href + `index.html?mode=remove&path=${escape(path)}`;
+  const res = await fetch(url);
+  console.log(res);
+};
+
 const updateBook = async ({title, authors, path}) => {
   const el = document.createElement("div");
   el.classList.add("update");
@@ -112,7 +123,15 @@ const updateBook = async ({title, authors, path}) => {
 
   _displayQueryPanel(el, title, authors, path);
 
-  const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"" inauthor:${authors}&maxResults=40`);
+  let queryString = "https://www.googleapis.com/books/v1/volumes?maxResults=40&q=";
+  if (title) {
+    queryString += ` intitle:"${title}"`;
+  }
+  if (authors) {
+    queryString += ` inauthor:${authors}`;
+  }
+  console.log(queryString);
+  const res = await fetch(queryString);
   const json = await res.json(res);
   if (json && json.items) {
     _displayBookQueryResult(el, json, path);
@@ -154,7 +173,7 @@ const displayAllBooks = () => {
     }
 
     _addButton(el, "Open", () => { openBook(book.path); });
-    _addButton(el, "Remove", () => { /*removeBook(book.path);*/ });
+    _addButton(el, "Remove", () => { removeBook(book); });
     _addButton(el, "Update", () => { updateBook(book); });
 
     document.querySelector("body").appendChild(el);

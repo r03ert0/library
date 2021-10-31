@@ -1,16 +1,16 @@
 /* eslint-disable no-sync */
 const fs = require('fs');
 const bookInfo = require('./book_info.js');
-const booksCSV = fs.readFileSync('my_book_titles.tsv').toString();
+// const booksCSV = fs.readFileSync('my_book_titles.tsv').toString();
 const querystring = require('querystring');
-const books = booksCSV.split("\n").map((row)=> {
-  const [path, authors, title] = row.split("\t");
-  return { path, authors, title: title.trim() };
-});
+// const books = booksCSV.split("\n").map((row)=> {
+//   const [path, authors, title] = row.split("\t");
+//   return { path, authors, title: title.trim() };
+// });
 
 const queryAllBooks = async (req, res) => {
   const { headers, method, url } = req;
-  const result =  await bookInfo.queryAllBooks(books);
+  const result = await bookInfo.queryAllBooks();
   const resBody = { headers, method, url, body: result };
   // return resBody;
   res.statusCode = 200;
@@ -28,7 +28,17 @@ const servePDF = (req, res) => {
   res.setHeader('Content-Type', 'application/pdf');
   res.write(pdf);
   res.end();
-}
+};
+
+const removeBook = async (req, res) => {
+  const params = querystring.parse(req._parsedUrl.query);
+  const result = await bookInfo.removeBook({path: params.path});
+  const resBody = { body: result };
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
+  res.write(JSON.stringify(resBody));
+  res.end();
+};
 
 const methodGet = (req, res, next) => {
   const params = querystring.parse(req._parsedUrl.query);
@@ -37,10 +47,12 @@ const methodGet = (req, res, next) => {
     queryAllBooks(req, res);
   } else if (params.mode && params.mode === "read") {
     servePDF(req, res);
+  } else if (params.mode && params.mode === "remove") {
+    removeBook(req, res);
   } else {
     next();
   }
-}
+};
 
 const methodPost = async (req, res, next) => {
   const data = [];

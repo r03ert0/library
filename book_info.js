@@ -121,7 +121,7 @@ const getBookInfo = async (query) => {
   return info;
 };
 
-const queryAllBooks = async (list) => {
+const importBooks = async (list) => {
   const allBooksInfo = [];
 
   for(const [i, book] of list.entries()) {
@@ -133,6 +133,19 @@ const queryAllBooks = async (list) => {
   }
 
   return allBooksInfo;
+};
+
+const queryAllBooks = async () => {
+  const books = await new Promise((resolve, reject) => {
+    db.get("library").find()
+      .then((res) => { resolve(res); });
+  });
+
+  for (const book of books) {
+    delete book._id;
+  }
+
+  return books;
 };
 
 const updateBook = (book) => new Promise((resolve, reject) => {
@@ -158,7 +171,25 @@ const updateBook = (book) => new Promise((resolve, reject) => {
     .then(resolve);
 });
 
+const removeBook = (book) => new Promise((resolve, reject) => {
+  if (!book.path) {
+    reject(new Error("ERROR: No path provided"));
+  }
+
+  const query = {
+    path: book.path
+  };
+
+  db.get("library").remove(query)
+    .then((res) => {
+      console.log("remove", res);
+      resolve(res);
+    });
+});
+
 module.exports = {
+  importBooks,
   queryAllBooks,
-  updateBook
+  updateBook,
+  removeBook
 };
