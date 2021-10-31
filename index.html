@@ -2,77 +2,7 @@
 <html>
 <head>
   <title>Library</title>
-  <style>
-    h2 {
-      font-family: sans-serif;
-      font-size: 1.2rem;
-      margin: 0;
-    }
-    .img-div {
-      float: left;
-      margin-right: 10px;
-      width: 128px;
-      height: 192px;
-      background: #ddd;
-    }
-    .path {
-      overflow-wrap: break-word;
-      color: #aaa;
-    }
-    .book {
-      display: inline-block;
-      position: relative;
-      width: 400px;
-      height: 220px;
-      margin: 10px;
-      padding: 10px;
-      border: thin solid #ddd;
-      vertical-align: top;
-    }
-    .book.incomplete::before {
-      content: "";
-      position:absolute;
-      background: red;
-      width:1rem;
-      height:1rem;
-      margin: 5px;
-      border-radius: 10px;
-      top:0;
-      left:0;
-    }
-    .book > button {
-      margin: 0 3px;
-    }
-    .update {
-      display: block;
-      position: fixed;
-      top: 10%;
-      left: 10%;
-      width: 80%;
-      height: 80%;
-      background: white;
-      border: thin solid black;
-    }
-    .update > button {
-      margin: 3px;
-    }
-    .content {
-      display: block;
-      top: 10%;
-      left: 10%;
-      width: 100%;
-      height: calc(100% - 160px);
-      background: lightgrey;
-      overflow: scroll;
-    }
-    .query {
-      padding: 5px;
-      width: 100%;
-    }
-    .query > input {
-      width: calc(100% - 20px);
-    }
-  </style>
+  <link href="style.css" rel="stylesheet">
 </head>
 <body>
   <script src="index.js"></script>
