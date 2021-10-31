@@ -1,0 +1,22 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "get_book_info.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Roberto Toro <rto@braincatalogue.org> (https://neuroanatomy.github.io/)",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.23.0",
+    "finalhandler": "^1.1.2",
+    "live-server": "github:r03ert0/live-server",
+    "monk": "^7.3.4",
+    "pdfjs-dist": "^2.10.377",
+    "serve-index": "^1.9.1",
+    "serve-static": "^1.14.1"
+  }
+}
