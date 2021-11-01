@@ -3,6 +3,11 @@ const monk = require('monk');
 const MONGO_DB = '127.0.0.1:27017/library';
 const db = monk(MONGO_DB);
 
+/**
+ * Parse data from Google Books API
+ * @param {object} data Data from Google Books API
+ * @returns {object} Book data
+ */
 const parseData = (data) => {
   let parsedData;
 
@@ -26,9 +31,15 @@ const parseData = (data) => {
   return parsedData;
 };
 
+/**
+ * Get book information from the database
+ * @param {object} query Object with `path` property containing the
+ * path to the book pdf in the local file system
+ * @returns {object} The book entry in the database
+ */
 const getBookInfoFromDB = async (query) => {
   const info = await new Promise((resolve, reject) => {
-    db.get("library").findOne({path: query.path})
+    db.get("library").findOne({path: unescape(query.path)})
       .then((res) => {
         resolve(res);
       });
@@ -59,6 +70,11 @@ const getBookInfoFromDB = async (query) => {
   */
 };
 
+/**
+ * Get book information from Google Books. Used when batch importing books.
+ * @param {object} query Query book info from Google Books using isbn or title.
+ * @returns {void}
+ */
 const getBookInfoFromGoogle = async (query) => {
   console.log("  Querying Google Books API");
 
@@ -82,11 +98,24 @@ const getBookInfoFromGoogle = async (query) => {
 
 };
 
+/**
+ * Add book entry to database
+ * @param {object} book Book data
+ * @returns {void}
+ */
 const addBookToDB = (book) => new Promise((resolve, reject) => {
   db.get("library").insert(book)
     .then(resolve);
 });
 
+/**
+ * Get information for a book, either from the local database or from Google Books.
+ * Book data obtained from Google Books is added to the local database, creating
+ * a new entry. If the information is unavailable, an incomplete record is created.
+ * @param {object} query Query object containing the book's path in the local
+ * filesystem, or title or author fields which can be used to query Google Books
+ * @returns {object} The book entry in the database
+ */
 const getBookInfo = async (query) => {
   if(typeof query.path === "undefined") {
     // console.log("ERROR: Query does not contain path to book's pdf", query);
@@ -107,7 +136,7 @@ const getBookInfo = async (query) => {
   info = await getBookInfoFromGoogle(query);
   if (info) {
     // console.log("Book found in Google Books: adding.");
-    info.path = query.path;
+    info.path = unescape(query.path);
     addBookToDB(info);
 
     return info;
@@ -121,11 +150,18 @@ const getBookInfo = async (query) => {
   return info;
 };
 
+/**
+ * 
+ * @param {array} list List of books to add. Each entry should contain a path,
+ * and can also contain title, authors or isbn.
+ * @returns {array} Updated book information containing the fields provided by
+ * Google Books
+ */
 const importBooks = async (list) => {
   const allBooksInfo = [];
 
   for(const [i, book] of list.entries()) {
-    console.log(`${i}. Book path: ${book.path}`);
+    console.log(`${i}. Book path: ${unescape(book.path)}`);
     const info = await getBookInfo(book);
     if (info) {
       allBooksInfo.push(info);
@@ -135,6 +171,9 @@ const importBooks = async (list) => {
   return allBooksInfo;
 };
 
+/**
+ * @returns {array} List of all books in the database
+ */
 const queryAllBooks = async () => {
   const books = await new Promise((resolve, reject) => {
     db.get("library").find()
@@ -148,17 +187,22 @@ const queryAllBooks = async () => {
   return books;
 };
 
+/**
+ * Update data for book at path
+ * @param {object} book New book data, should contain all fields.
+ * @returns {void}
+ */
 const updateBook = (book) => new Promise((resolve, reject) => {
   if (!book.path) {
     reject(new Error("ERROR: No path provided"));
   }
 
   const query = {
-    path: book.path
+    path: unescape(book.path)
   };
 
   const update = {
-    path: book.path,
+    path: unescape(book.path),
     title: book.title,
     authors: book.authors,
     industryIdentifiers: book.industryIdentifiers,
@@ -171,17 +215,22 @@ const updateBook = (book) => new Promise((resolve, reject) => {
   console.log(query);
   console.log(update);
 
-  db.get("library").update(query, update, {replaceOne: true})
+  db.get("library").update(query, update, {upsert: true, replaceOne: true})
     .then(resolve);
 });
 
+/**
+ * Remove book at path from database
+ * @param {object} book Book data including the path field
+ * @returns {void}
+ */
 const removeBook = (book) => new Promise((resolve, reject) => {
   if (!book.path) {
     reject(new Error("ERROR: No path provided"));
   }
 
   const query = {
-    path: book.path
+    path: unescape(book.path)
   };
 
   db.get("library").remove(query)
