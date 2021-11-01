@@ -1,0 +1,8 @@
+it('should correctly start the http server')
+it('should correctly start the ws server')
+it('should generate a valid user unique identifier')
+it('should respond to ws messages')
+it('should respond to echo ws message')
+it('should respond to greet ws message')
+it('should respond to monk ws message')
+it('should inform about an unknown ws message')
