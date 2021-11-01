@@ -45,7 +45,6 @@ const removeBook = async (req, res) => {
 
 const methodGet = (req, res, next) => {
   const params = querystring.parse(req._parsedUrl.query);
-  console.log(JSON.stringify(params));
   if (params.books) {
     queryAllBooks(req, res);
   } else if (params.mode && params.mode === "read") {
@@ -77,8 +76,6 @@ const methodPost = async (req, res, next) => {
 };
 
 module.exports = async (req, res, next) => {
-  console.log("Method:", req.method);
-
   if (req.method === "GET") {
     methodGet(req, res, next);
   } else if (req.method === "POST") {

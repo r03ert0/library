@@ -1,231 +1,267 @@
-let books;
+import {OrbitControls} from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+import {VRButton} from './node_modules/three/examples/jsm/webxr/VRButton.js';
+import {XRControllerModelFactory} from './node_modules/three/examples/jsm/webxr/XRControllerModelFactory.js';
+import {addRoom} from "./room.js";
 
-const openBook = (path) => {
-  const url = location.href + `index.html?mode=read&path=${escape(path)}`;
-  location = url;
-};
+let camera, cameraRig, controls, renderer, scene;
+let controller1, controller2;
+let controllerGrip1, controllerGrip2;
+let rightHand = null;
+let leftHand = null;
+let debounce;
+const intersectionFunctions = [];
+const updateFunctions = [];
+const rightHandSelectStartFunctions = [];
+const rightHandSelectEndFunctions = [];
 
-const _displayQueryPanel = (el, title, authors, path) => {
-  const queryEl = document.createElement("div");
-  queryEl.classList.add("query");
-  queryEl.innerHTML = `
-  <b>Path</b><br />
-  <span>${path}</span><br />
-  <b>Title</b><br />
-  <input id="title" type="text" value="${title}" /><br />
-  <b>Authors</b><br />
-  <input id="authors" type="text" value="${
-  (typeof (authors)==="string")?authors:authors.join(", ")
-}" />
-  `;
-  const queryButton = document.createElement("button");
-  queryButton.innerHTML = "Query";
-  queryButton.addEventListener("click", () => {
-    const newTitle = queryEl.querySelector("#title").value;
-    const newAuthors = queryEl.querySelector("#authors").value;
-    el.remove();
-    updateBook({title: newTitle, authors: newAuthors, path});
-  });
-  queryEl.appendChild(queryButton);
-  el.appendChild(queryEl);
-};
+THREE.Cache.enabled = false;
 
-const _displayBookQueryResult = (el, json, path) => {
-  const contentDiv = document.createElement("div");
-  contentDiv.classList.add("content");
-  el.appendChild(contentDiv);
-
-  for (const [i, item] of json.items.entries()) {
-    // industryIdentifiers: item.volumeInfo.industryIdentifiers,
-    contentDiv.innerHTML += `
-      <div style="border: thin solid grey;margin:10px;padding:10px;background:white">
-        <input type="radio" name="update" value="${i}"/>
-        <label for="${i}">
-          <img style="vertical-align: top; border: thin solid grey" src="${item.volumeInfo.imageLinks?item.volumeInfo.imageLinks.thumbnail:""}" />
-          <div style="display:inline-block">
-            <b>${item.volumeInfo.title}.</b><br />
-            ${item.volumeInfo.authors}<br />
-            (${item.volumeInfo.pageCount} pages)
-          </div>
-        </label>
-      </div>
-    `;
-  }
-  contentDiv.querySelector("input[name=update").checked = true;
-
-  const buttonUpdate = document.createElement("button");
-  buttonUpdate.innerHTML = "Update";
-  buttonUpdate.addEventListener("click", async () => {
-    const options = document.querySelectorAll('input[name=update]');
-    let selectedIndex = -1;
-    for(let i = 0; i < options.length; i++) {
-      if(options[i].checked) {
-        selectedIndex = i;
-        break;
-      }
+const indexOfMinimumIntersectionDistance = (intersections) => {
+  let minDistance = Infinity;
+  let indexMin;
+  for(let i=0; i<intersections.length; i++) {
+    const intersection = intersections[i];
+    if(intersection.distance < minDistance) {
+      minDistance = intersection.distance;
+      indexMin = i;
     }
-    if(selectedIndex<0) {
+  }
+
+  return indexMin;
+};
+
+let prevIndexMin = -1;
+const handleIntersections = () => {
+  const line = rightHand.getObjectByName( 'line' );
+
+  // return if no laser
+  if (typeof line === "undefined") {
+    return;
+  }
+
+  // set laser length to maximum
+  line.scale.z = line.userData.maxRayLength;
+
+  // call all intersection functions
+  const intersections = intersectionFunctions.map(
+    (intersectionFunction) => intersectionFunction.getIntersection()
+  );
+  const indexMin = indexOfMinimumIntersectionDistance(intersections);
+
+  if(indexMin >= 0 ) {
+    // if intersection, adjust the laser length
+    line.scale.z = intersections[indexMin].distance;
+
+    // call the corresponding intersectionStart function
+    intersectionFunctions[indexMin].intersectionStart(intersections[indexMin]);
+
+    // if the intersected object is not the same as before, call
+    // intersectionEnd on the previous one
+    if(prevIndexMin >= 0 && indexMin !== prevIndexMin && intersectionFunctions[prevIndexMin].intersectionEnd) {
+      intersectionFunctions[prevIndexMin].intersectionEnd();
+    }
+
+    // remember the intersected object
+    prevIndexMin = indexMin;
+  } else if (prevIndexMin >= 0 && intersectionFunctions[prevIndexMin].intersectionEnd) {
+    // if there no intersection, but there was one before,
+    // call intersectionEnd on that object
+    intersectionFunctions[prevIndexMin].intersectionEnd();
+    prevIndexMin = -1;
+  }
+};
+
+const handleUpdates = () => {
+  for(const func of updateFunctions) {
+    func();
+  }
+};
+
+// right hand trigger start
+const handleRightHandSelectStart = (e) => {
+  if (e.timeStamp - debounce < 100) { return; }
+  debounce = e.timeStamp;
+
+  for(const func of rightHandSelectStartFunctions) {
+    if (func()) {
       return;
     }
+  }
+};
 
-    const item = json.items[selectedIndex];
-    const book = {
-      path,
-      title: item.volumeInfo.title,
-      industryIdentifiers: item.volumeInfo.industryIdentifiers,
-      authors: item.volumeInfo.authors,
-      pageCount: item.volumeInfo.pageCount,
-      dimensions: item.volumeInfo.dimensions
-    };
-    if(item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail) {
-      book.thumbnail = item.volumeInfo.imageLinks.thumbnail;
+// right hand trigger end
+const handleRightHandSelectEnd = (e) => {
+  if (e.timeStamp - debounce < 100) { return; }
+  debounce = e.timeStamp;
+
+  for(const func of rightHandSelectEndFunctions) {
+    if (func()) {
+      return;
     }
-    const res = await fetch(location.href, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(book)
-    });
+  }
+};
 
-    el.remove();
+const handleRightHandSqueezeStart = () => {};
+
+const handleRightHandSqueezeEnd = () => {};
+
+const handleLeftHandSelectStart = () => {};
+
+const handleLeftHandSelectEnd = () => {};
+
+const setRightHand = (controller) => {
+  rightHand = controller;
+
+  // right hand laser
+  const geometry = new THREE.BufferGeometry().setFromPoints( [new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, -1 )] );
+  const line = new THREE.Line( geometry );
+  line.name = 'line';
+  line.userData.maxRayLength = 5;
+  controller.add(line.clone());
+
+  // actions
+  rightHand.addEventListener( 'selectstart', handleRightHandSelectStart);
+  rightHand.addEventListener( 'selectend', handleRightHandSelectEnd);
+  rightHand.addEventListener( 'squeezestart', handleRightHandSqueezeStart);
+  rightHand.addEventListener( 'squeezeend', handleRightHandSqueezeEnd);
+};
+
+const setLeftHand = async (controller, controllerGrip) => {
+  leftHand = controller;
+
+  leftHand.addEventListener( 'selectstart', handleLeftHandSelectStart);
+  leftHand.addEventListener( 'selectend', handleLeftHandSelectEnd);
+};
+
+const addControllerProps = (data, controller, controllerGrip) => {
+  const {handedness} = data;
+
+  switch (handedness) {
+  case 'right':
+    setRightHand(controller);
+    break;
+  case 'left':
+    setLeftHand(controller, controllerGrip);
+    break;
+  }
+};
+
+const onWindowResize = () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+};
+
+const loop = () => {
+  if (rightHand && leftHand) {
+    handleIntersections();
+    handleUpdates();
+  }
+
+  controls.update();
+  renderer.render( scene, camera );
+};
+
+/* eslint-disable max-statements */
+const initThree = async () => {
+  const WIDTH = window.innerWidth;
+  const HEIGHT = window.innerHeight;
+
+  // scene
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color( 0x7f7f7f );
+
+  // camera rig
+  cameraRig = new THREE.Group();
+  cameraRig.name = "cameraRig";
+  window.cameraRig = cameraRig;
+  cameraRig.position.set(0, 0, 0);
+  camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.1, 100 );
+  camera.position.set( 0, 1.6, 0 );
+  camera.name = "camera";
+  cameraRig.add(camera);
+  scene.add(cameraRig);
+
+  // renderer
+  renderer = new THREE.WebGLRenderer({
+    antialias: true
   });
-  el.appendChild(buttonUpdate);
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( WIDTH, HEIGHT );
+  renderer.xr.enabled = true;
+  renderer.localClippingEnabled = true;
+  document.body.appendChild( renderer.domElement );
 
-  const buttonCancel = document.createElement("button");
-  buttonCancel.innerHTML = "Cancel";
-  buttonCancel.addEventListener("click", () => {
-    document.querySelector("body").removeChild(el);
+  // controls
+  controls = new OrbitControls( camera, renderer.domElement );
+  controls.target = new THREE.Vector3( 0, 1, -1.8 );
+  controls.update();
+
+  // VR button
+  document.body.appendChild(VRButton.createButton(renderer));
+
+  // Room (room's floor is later used for teleportation)
+  const {floor} = await addRoom(scene);
+
+  /**
+   * add controllers
+   */
+
+  // light for the controllers
+  const light = new THREE.PointLight( 0xffffff, 1, 100 );
+  light.name = "light";
+  light.position.set( 0, 2, 0 );
+  cameraRig.add( light );
+
+  // right hand
+  const controllerModelFactory = new XRControllerModelFactory();
+  controller1 = renderer.xr.getController(0);
+  cameraRig.add( controller1 );
+  controllerGrip1 = renderer.xr.getControllerGrip(0);
+  controllerGrip1.add( controllerModelFactory.createControllerModel( controllerGrip1 ) );
+  cameraRig.add(controllerGrip1);
+
+  // left hand
+  controller2 = renderer.xr.getController(1);
+  cameraRig.add( controller2 );
+  controllerGrip2 = renderer.xr.getControllerGrip(1);
+  controllerGrip2.add( controllerModelFactory.createControllerModel( controllerGrip2 ) );
+  cameraRig.add(controllerGrip2);
+
+  /**
+   * Events
+   */
+
+  // push intersection detection and handling functions
+  // intersectionFunctions.push({ name, getIntersection, intersectionStart });
+
+  // push update functions
+  // updateFunctions.push();
+
+  // push right hand selectStart functions
+  // rightHandSelectStartFunctions.push();
+
+  // push right hand selectEnd functions
+  // rightHandSelectEndFunctions.push();
+
+  // start animation
+  renderer.setAnimationLoop( loop );
+
+  // handle resize events
+  window.addEventListener('resize', onWindowResize );
+};
+/* eslint-enable max-statements */
+
+const main = async () => {
+  await initThree();
+
+  controller1.addEventListener( 'connected', (event) => {
+    addControllerProps(event.data, controller1, controllerGrip1);
   });
-  el.appendChild(buttonCancel);
-};
 
-const _displayEmptyQueryResult = (el) => {
-  const buttonCancel = document.createElement("button");
-  buttonCancel.innerHTML = "Cancel";
-  buttonCancel.addEventListener("click", () => {
-    document.querySelector("body").removeChild(el);
-  });
-  el.appendChild(buttonCancel);
-};
-
-const removeBook = async ({path}) => {
-  // eslint-disable-next-line no-alert
-  const answer = confirm("Confirm removal");
-  if (!answer) {
-    return;
-  }
-  const url = location.href + `index.html?mode=remove&path=${escape(path)}`;
-  const res = await fetch(url);
-  console.log(res);
-};
-
-const importBook = () => {
-  const path = prompt("Enter book path");
-  if (!path) {
-    return;
-  }
-  updateBook({
-    title: "",
-    authors: "",
-    path
+  controller2.addEventListener( 'connected', (event) => {
+    addControllerProps(event.data, controller2, controllerGrip2);
   });
 };
 
-
-const updateBook = async ({title, authors, path}) => {
-  const el = document.createElement("div");
-  el.classList.add("update");
-  document.querySelector("body").appendChild(el);
-
-  _displayQueryPanel(el, title, authors, path);
-
-  let queryString = "https://www.googleapis.com/books/v1/volumes?maxResults=40&q=";
-  if (title) {
-    queryString += ` intitle:"${title}"`;
-  }
-  if (authors) {
-    queryString += ` inauthor:${authors}`;
-  }
-  console.log(queryString);
-  const res = await fetch(queryString);
-  const json = await res.json(res);
-  if (json && json.items) {
-    _displayBookQueryResult(el, json, path);
-  } else {
-    _displayEmptyQueryResult(el);
-  }
-};
-
-const _addButton = (el, name, fn) => {
-  const button = document.createElement("button");
-  button.innerHTML = name;
-  button.addEventListener("click", fn);
-  el.appendChild(button);
-};
-
-const displayAllBooks = (bookcaseEl) => {
-  for (const [i, book] of books.entries()) {
-    const el = document.createElement("div");
-    el.classList.add("book");
-
-    if(book.recordIncomplete) {
-      el.classList.add("incomplete");
-    }
-
-    el.innerHTML = book.thumbnail?
-      `<div class="img-div"><img src="${book.thumbnail.replace("http:", "https:")}" /></div>`:
-      `<div class="img-div"></div>`;
-
-    el.innerHTML += `<h2>${i+1}. ${book.title}</h2>`;
-
-    if(book.authors) {
-      el.innerHTML += (typeof book.authors === 'object')?
-        `<p>${book.authors.join(", ")}</p>`:
-        `<p>${book.authors}</p>`;
-    }
-
-    if(book.path) {
-      el.innerHTML += `<p class="path">${book.path}</p>`;
-    }
-
-    _addButton(el, "Open", () => { openBook(book.path); });
-    _addButton(el, "Remove", () => { removeBook(book); });
-    _addButton(el, "Update", () => { updateBook(book); });
-
-    bookcaseEl.appendChild(el);
-  }
-};
-
-const queryAllBooks = async () => {
-  const url = location.href + "?books=true";
-  console.log("querying", url);
-  const res = await fetch(url);
-  const result = await res.json();
-  books = result.body;
-
-  return books;
-};
-
-const makeToolbar = () => {
-  const el = document.createElement("div");
-  el.classList.add("toolbar");
-  _addButton(el, "Import Book", () => { importBook(); });
-  document.querySelector("body").appendChild(el);
-
-  return el;
-};
-
-const makeBookcase = () => {
-  const el = document.createElement("div");
-  document.querySelector("body").appendChild(el);
-
-  return el;
-};
-
-const init = async () => {
-  books = await queryAllBooks();
-  const toolbarEl = makeToolbar();
-  const bookcaseEl = makeBookcase();
-  displayAllBooks(bookcaseEl);
-};
-
-init();
+main();
