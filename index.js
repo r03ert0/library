@@ -9,6 +9,8 @@ const _displayQueryPanel = (el, title, authors, path) => {
   const queryEl = document.createElement("div");
   queryEl.classList.add("query");
   queryEl.innerHTML = `
+  <b>Path</b><br />
+  <span>${path}</span><br />
   <b>Title</b><br />
   <input id="title" type="text" value="${title}" /><br />
   <b>Authors</b><br />
@@ -116,6 +118,19 @@ const removeBook = async ({path}) => {
   console.log(res);
 };
 
+const importBook = () => {
+  const path = prompt("Enter book path");
+  if (!path) {
+    return;
+  }
+  updateBook({
+    title: "",
+    authors: "",
+    path
+  });
+};
+
+
 const updateBook = async ({title, authors, path}) => {
   const el = document.createElement("div");
   el.classList.add("update");
@@ -147,7 +162,7 @@ const _addButton = (el, name, fn) => {
   el.appendChild(button);
 };
 
-const displayAllBooks = () => {
+const displayAllBooks = (bookcaseEl) => {
   for (const [i, book] of books.entries()) {
     const el = document.createElement("div");
     el.classList.add("book");
@@ -176,7 +191,7 @@ const displayAllBooks = () => {
     _addButton(el, "Remove", () => { removeBook(book); });
     _addButton(el, "Update", () => { updateBook(book); });
 
-    document.querySelector("body").appendChild(el);
+    bookcaseEl.appendChild(el);
   }
 };
 
@@ -190,9 +205,27 @@ const queryAllBooks = async () => {
   return books;
 };
 
+const makeToolbar = () => {
+  const el = document.createElement("div");
+  el.classList.add("toolbar");
+  _addButton(el, "Import Book", () => { importBook(); });
+  document.querySelector("body").appendChild(el);
+
+  return el;
+};
+
+const makeBookcase = () => {
+  const el = document.createElement("div");
+  document.querySelector("body").appendChild(el);
+
+  return el;
+};
+
 const init = async () => {
   books = await queryAllBooks();
-  displayAllBooks();
+  const toolbarEl = makeToolbar();
+  const bookcaseEl = makeBookcase();
+  displayAllBooks(bookcaseEl);
 };
 
 init();
