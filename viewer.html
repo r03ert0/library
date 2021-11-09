@@ -1,23 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>PDF Viewer</title>
+    <title>Viewer</title>
     <style>
       html, body {
         width: 100%;
         height: 100%;
+        margin: 0;
+        font-family: sans-serif;
+      }
+      #waiting {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: thin solid gray;
+        padding: 2rem;
+        transform: translate( -50%, -50% );
+        text-align: center;
       }
     </style>
   </head>
   <body>
-      <!-- 
-      src="file://Users/roberto/Documents/articles/Physics/1931Bridgman;DimensionalAnalysis;Book.pdf"
-      -->
-        <embed
-          src="https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf"
-          width="100%"
-          height="100%"
-        />
-
+    <div id="waiting">
+      <h2>Waiting for books</h2>
+      <span style="font-size: 64px">📚</span>
+    </div>
+    <script src="viewer.js"></script>
   </body>
 </html>

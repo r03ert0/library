@@ -22,6 +22,16 @@ const getUId = () => {
  * Websocket interaction
  */
 
+const broadcast = (msg) => {
+  console.log("broadcast message:", msg);
+  for(const uid in clients) {
+    console.log("broadcast to uid:", uid)
+    if (clients.hasOwnProperty(uid)) {
+      clients[uid].ws.send(msg);
+    }
+  }
+}
+
 // eslint-disable-next-line max-statements
 const wsmessage = (uid, event) => {
   const msg = event.data;
@@ -38,16 +48,19 @@ const wsmessage = (uid, event) => {
   case "greet":
     clients[uid].ws.send("Greetings for the day");
     break;
+  case "open":
+    broadcast(parts[1]);
+    break;
   case "monk": {
     const [, callbackId, fn, ...rest] = parts;
     console.log("callbackId:", callbackId);
     console.log("func:", fn);
     const args = rest?JSON.parse(rest.join(" ")):[];
     console.log("args:", args);
-    const collection = db.get("bookmarks");
+    const collection = db.get("library");
     collection[fn](...args).then((content) => {
       clients[uid].ws.send(JSON.stringify({
-        type: "bookmark",
+        type: "book",
         callbackId,
         content
       }));
@@ -59,6 +72,8 @@ const wsmessage = (uid, event) => {
   }
 };
 
+let originalOnopenFn;
+let originalOncloseFn;
 const params = {
   port: 8080,
   ignorePattern: /.*\.git.*/,
@@ -66,11 +81,23 @@ const params = {
   cors: true,
   setws: (client) => {
     (function (ws, uid) {
-      clients[uid] = {
-        ws,
-        homedir
+      console.log("new user:", uid);
+      clients[uid] = { ws, homedir };
+      originalOnmessageFn = ws.onmessage;
+      originalOnopenFn = ws.onopen;
+      originalOncloseFn = ws.onclose;
+      ws.onmessage = (msg) => {
+        wsmessage(uid, msg);
       };
-      ws.onmessage = (msg) => { wsmessage(uid, msg); };
+      ws.onopen = (e) => {
+        console.log(">> onopen", uid);
+        originalOnopenFn();
+      }
+      ws.onclose = (e) => {
+        console.log(">> onclose", uid);
+        delete clients[uid];
+        originalOncloseFn();
+      }
       console.log("new websocket client added in app.js");
     }(client, getUId()));
   },

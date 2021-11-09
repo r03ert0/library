@@ -1,8 +1,9 @@
 let books;
 
 const openBook = (path) => {
-  const url = location.href + `index.html?mode=read&path=${escape(path)}`;
-  location = url;
+  const bookUrl = location.href + `?mode=read&path=${escape(path)}`;
+  const viewerUrl = `/viewer.html?file=${bookUrl}`;
+  window.open(viewerUrl, '_blank');
 };
 
 const _displayQueryPanel = (el, title, authors, path) => {

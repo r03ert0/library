@@ -2,6 +2,7 @@
 const fs = require('fs');
 const bookInfo = require('./book_info.js');
 const querystring = require('querystring');
+const request = require('request');
 
 const importBooks = (req, res) => {
   // const booksCSV = fs.readFileSync('my_book_titles.tsv').toString();
@@ -23,16 +24,65 @@ const queryAllBooks = async (req, res) => {
 };
 
 const servePDF = (req, res) => {
-  console.log("Serving pdf");
+  console.log("Format: pdf");
   const params = querystring.parse(req._parsedUrl.query);
-  const pdf =fs.readFileSync(params.path);
-  var stat = fs.statSync(params.path);
+  const pdf =fs.readFileSync(unescape(params.path));
+  var stat = fs.statSync(unescape(params.path));
   res.setHeader('Content-Length', stat.size);
   res.setHeader('Content-Type', 'application/pdf');
   res.write(pdf);
   res.end();
 };
 
+const serveDJVU = (req, res) => {
+  console.log("Format: djvu");
+  const params = querystring.parse(req._parsedUrl.query);
+  const djvu =fs.readFileSync(unescape(params.path));
+  var stat = fs.statSync(unescape(params.path));
+  res.setHeader('Content-Length', stat.size);
+  res.setHeader('Content-Type', 'image/vnd.djvu');
+  res.write(djvu);
+  res.end();
+};
+
+const serveEPUB = (req, res) => {
+  console.log("Format: epub");
+  const params = querystring.parse(req._parsedUrl.query);
+  const epub =fs.readFileSync(unescape(params.path));
+  var stat = fs.statSync(unescape(params.path));
+  res.setHeader('Content-Length', stat.size);
+  res.setHeader('Content-Type', 'application/epub+zip');
+  res.write(epub);
+  res.end();
+};
+
+const serveBook = (req, res) => {
+  console.log("Serving book");
+  const params = querystring.parse(req._parsedUrl.query);
+  console.log(req._parsedUrl.query);
+  console.log(params);
+  const ext = params.path.split(".").pop();
+  switch (ext) {
+    case "pdf":
+      servePDF(req, res);
+      break;
+    case "djvu":
+      serveDJVU(req, res);
+      break;
+    case "epub":
+      serveEPUB(req, res);
+      break;
+    default:
+      console.log("ERROR. Unknown book format:", ext);
+  }
+  res.end();
+};
+
+const serveImage = (req, res) => {
+  const params = querystring.parse(req._parsedUrl.query);
+  const url = unescape(params.path);
+  request.get(url).pipe(res);
+}
 const removeBook = async (req, res) => {
   const params = querystring.parse(req._parsedUrl.query);
   const result = await bookInfo.removeBook({path: params.path});
@@ -48,9 +98,11 @@ const methodGet = (req, res, next) => {
   if (params.books) {
     queryAllBooks(req, res);
   } else if (params.mode && params.mode === "read") {
-    servePDF(req, res);
+    serveBook(req, res);
   } else if (params.mode && params.mode === "remove") {
     removeBook(req, res);
+  } else if (params.mode && params.mode === "image") {
+    serveImage(req, res);
   } else {
     return next();
   }

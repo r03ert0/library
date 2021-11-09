@@ -208,7 +208,9 @@ const updateBook = (book) => new Promise((resolve, reject) => {
     industryIdentifiers: book.industryIdentifiers,
     pageCount: book.pageCount,
     dimensions: book.dimensions,
-    thumbnail: book.thumbnail
+    thumbnail: book.thumbnail,
+    position: book.position,
+    rotation: book.rotation
   };
 
   console.log("update");

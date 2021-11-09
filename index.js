@@ -1,3 +1,7 @@
+import * as Books from "./books_vr.js";
+import * as Move from "./move.js";
+import * as Teleport from "./teleport.js";
+import * as Tractor from "./tractor.js";
 import {OrbitControls} from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 import {VRButton} from './node_modules/three/examples/jsm/webxr/VRButton.js';
 import {XRControllerModelFactory} from './node_modules/three/examples/jsm/webxr/XRControllerModelFactory.js';
@@ -101,9 +105,29 @@ const handleRightHandSelectEnd = (e) => {
   }
 };
 
-const handleRightHandSqueezeStart = () => {};
+const handleRightHandSqueezeStart = () => {
+  if (Move.moving === true) {
+    return;
+  }
 
-const handleRightHandSqueezeEnd = () => {};
+  if (Books.selectedBook) {
+    Move.startMoving(Books.selectedBook, rightHand);
+  }
+};
+
+const handleRightHandSqueezeEnd = () => {
+  if (Move.moving === false) {
+    return;
+  }
+
+  if (Books.selectedBook) {
+    Move.stopMoving(Books.selectedBook, Books.booksGroup);
+    Books.updateDB(Books.selectedBook.userData.id, {
+      position: Books.selectedBook.position.toArray(),
+      rotation: Books.selectedBook.rotation.toArray()
+    });
+  }
+};
 
 const handleLeftHandSelectStart = () => {};
 
@@ -152,9 +176,26 @@ const onWindowResize = () => {
   renderer.setSize( window.innerWidth, window.innerHeight );
 };
 
+const updateTractor = () => {
+  if (Move.moving === false) {
+    return;
+  }
+
+  if (prevIndexMin<0) {
+    return;
+  }
+
+  const {name} = intersectionFunctions[prevIndexMin];
+  if (name === "books") {
+    Tractor.update(rightHand, Books.selectedBook);
+  }
+};
+
 const loop = () => {
   if (rightHand && leftHand) {
-    handleIntersections();
+    if(Move.moving === false) {
+      handleIntersections();
+    }
     handleUpdates();
   }
 
@@ -203,6 +244,15 @@ const initThree = async () => {
   // Room (room's floor is later used for teleportation)
   const {floor} = await addRoom(scene);
 
+  // Books
+  await Books.init(scene);
+
+  // Tractor
+  Tractor.init(renderer);
+
+  // Teleport
+  Teleport.init(scene, renderer, cameraRig);
+
   /**
    * add controllers
    */
@@ -233,13 +283,41 @@ const initThree = async () => {
    */
 
   // push intersection detection and handling functions
-  // intersectionFunctions.push({ name, getIntersection, intersectionStart });
+  intersectionFunctions.push({
+    name: "teleport",
+    getIntersection: () => Teleport.getIntersection(rightHand, floor),
+    intersectionStart: Teleport.intersectionStart
+  }, {
+    name: "books",
+    getIntersection: () => Books.getIntersection(rightHand),
+    intersectionStart: Books.intersectionStart,
+    intersectionEnd: Books.intersectionEnd
+  });
 
   // push update functions
-  // updateFunctions.push();
+  updateFunctions.push(
+    () => { Teleport.update(rightHand, floor); },
+    () => { updateTractor(); }
+  );
 
   // push right hand selectStart functions
-  // rightHandSelectStartFunctions.push();
+  rightHandSelectStartFunctions.push( () => {
+    if(Books.selectedBook) {
+      const {userData: book} = Books.selectedBook;
+      const {title, path} = book;
+      console.log("open book:", title, path);
+      Books.openBook({title, path});
+
+      return true;
+    }
+  }, () => {
+    const {name} = intersectionFunctions[prevIndexMin];
+    if(name === "teleport") {
+      Teleport.jump();
+
+      return true;
+    }
+  });
 
   // push right hand selectEnd functions
   // rightHandSelectEndFunctions.push();
