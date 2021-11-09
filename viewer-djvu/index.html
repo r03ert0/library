@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<header>
+      <link
+      rel="icon"
+      sizes="any"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5' fill='grey'/%3E%3C/svg%3E"
+    >
+    <meta charset="utf-8">
+    <script src="djvu.js"></script>
+    <script src="djvu_viewer.js"></script>
+
+    <style>
+        html, body, #for_viewer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+
+    <script>
+        window.onload = function() {
+            // save as a global value
+            window.ViewerInstance = new DjVu.Viewer();
+            // render into the element
+            window.ViewerInstance.render(
+                document.querySelector("#for_viewer")
+            );
+            var url = document.location.search.replace("?file=", "");
+            window.ViewerInstance.loadDocumentByUrl(url);
+        };
+    </script>
+
+</header>
+
+<body>
+    <div id="for_viewer"></div>
+</body>
+
+</html>
