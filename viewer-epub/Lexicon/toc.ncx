@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="eng">
+  <head>
+    <meta content="1b21a7cf-4475-4b95-b8e0-54005d05c1e2" name="dtb:uid"/>
+    <meta content="3" name="dtb:depth"/>
+    <meta content="calibre (0.9.35)" name="dtb:generator"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>Lexicon</text>
+  </docTitle>
+  <navMap>
+    <navPoint class="chapter" id="num_1" playOrder="1">
+      <navLabel>
+        <text>Title Page</text>
+      </navLabel>
+      <content src="text/part0000.html"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_2" playOrder="1">
+      <navLabel>
+        <text>Copyright</text>
+      </navLabel>
+      <content src="text/part0001.html#x9781101604908_EPUB"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_3" playOrder="2">
+      <navLabel>
+        <text>Dedication</text>
+      </navLabel>
+      <content src="text/part0002.html#x9781101604908_EPUB"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_4" playOrder="3">
+      <navLabel>
+        <text>Epigraph</text>
+      </navLabel>
+      <content src="text/part0004.html#x9781101604908_EPUB"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_5" playOrder="4">
+      <navLabel>
+        <text>[I]</text>
+      </navLabel>
+      <content src="text/part0005.html#x9781101604908_EPUB"/>
+      <navPoint class="chapter" id="num_6" playOrder="5">
+        <navLabel>
+          <text>[ONE]</text>
+        </navLabel>
+        <content src="text/part0006.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_7" playOrder="6">
+        <navLabel>
+          <text>[TWO]</text>
+        </navLabel>
+        <content src="text/part0009.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_8" playOrder="7">
+        <navLabel>
+          <text>[THREE]</text>
+        </navLabel>
+        <content src="text/part0011.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_9" playOrder="8">
+        <navLabel>
+          <text>[FOUR]</text>
+        </navLabel>
+        <content src="text/part0013.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_10" playOrder="9">
+        <navLabel>
+          <text>[FIVE]</text>
+        </navLabel>
+        <content src="text/part0015.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_11" playOrder="10">
+        <navLabel>
+          <text>[SIX]</text>
+        </navLabel>
+        <content src="text/part0017.html#x9781101604908_EPUB"/>
+      </navPoint>
+    </navPoint>
+    <navPoint class="chapter" id="num_12" playOrder="11">
+      <navLabel>
+        <text>[II]</text>
+      </navLabel>
+      <content src="text/part0019.html#x9781101604908_EPUB"/>
+      <navPoint class="chapter" id="num_13" playOrder="12">
+        <navLabel>
+          <text>[ONE]</text>
+        </navLabel>
+        <content src="text/part0021.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_14" playOrder="13">
+        <navLabel>
+          <text>[TWO]</text>
+        </navLabel>
+        <content src="text/part0024.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_15" playOrder="14">
+        <navLabel>
+          <text>[THREE]</text>
+        </navLabel>
+        <content src="text/part0028.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_16" playOrder="15">
+        <navLabel>
+          <text>[FOUR]</text>
+        </navLabel>
+        <content src="text/part0030.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_17" playOrder="16">
+        <navLabel>
+          <text>[FIVE]</text>
+        </navLabel>
+        <content src="text/part0034.html#x9781101604908_EPUB"/>
+      </navPoint>
+    </navPoint>
+    <navPoint class="chapter" id="num_18" playOrder="17">
+      <navLabel>
+        <text>[III]</text>
+      </navLabel>
+      <content src="text/part0035.html#x9781101604908_EPUB"/>
+      <navPoint class="chapter" id="num_19" playOrder="18">
+        <navLabel>
+          <text>[ONE]</text>
+        </navLabel>
+        <content src="text/part0037.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_20" playOrder="19">
+        <navLabel>
+          <text>[TWO]</text>
+        </navLabel>
+        <content src="text/part0039.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_21" playOrder="20">
+        <navLabel>
+          <text>[THREE]</text>
+        </navLabel>
+        <content src="text/part0043.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_22" playOrder="21">
+        <navLabel>
+          <text>[FOUR]</text>
+        </navLabel>
+        <content src="text/part0045.html#x9781101604908_EPUB"/>
+      </navPoint>
+    </navPoint>
+    <navPoint class="chapter" id="num_23" playOrder="22">
+      <navLabel>
+        <text>[IV]</text>
+      </navLabel>
+      <content src="text/part0047.html#x9781101604908_EPUB"/>
+      <navPoint class="chapter" id="num_24" playOrder="23">
+        <navLabel>
+          <text>[ONE]</text>
+        </navLabel>
+        <content src="text/part0048.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_25" playOrder="24">
+        <navLabel>
+          <text>[TWO]</text>
+        </navLabel>
+        <content src="text/part0050.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_26" playOrder="25">
+        <navLabel>
+          <text>[THREE]</text>
+        </navLabel>
+        <content src="text/part0052.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_27" playOrder="26">
+        <navLabel>
+          <text>[FOUR]</text>
+        </navLabel>
+        <content src="text/part0054.html#x9781101604908_EPUB"/>
+      </navPoint>
+      <navPoint class="chapter" id="num_28" playOrder="27">
+        <navLabel>
+          <text>[FIVE]</text>
+        </navLabel>
+        <content src="text/part0057.html#x9781101604908_EPUB"/>
+      </navPoint>
+    </navPoint>
+    <navPoint class="chapter" id="num_29" playOrder="28">
+      <navLabel>
+        <text>ACKNOWLEDGMENTS</text>
+      </navLabel>
+      <content src="text/part0059.html#x9781101604908_EPUB"/>
+    </navPoint>
+  </navMap>
+</ncx>

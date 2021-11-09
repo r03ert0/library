@@ -1,0 +1,642 @@
+.Arrogance {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.3em;
+    margin-left: 1.2em;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-indent: -1.2em
+    }
+.Basic-Text-Frame {
+    display: block;
+    font-style: normal;
+    font-weight: normal
+    }
+.Book-Entry-Text {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 1.36em;
+    margin-right: 1.36em;
+    margin-top: 0;
+    text-indent: 1.09em
+    }
+.Book-Entry-Text-FL {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 1.36em;
+    margin-right: 1.36em;
+    margin-top: 0;
+    text-indent: 0
+    }
+.Book-Entry-Title {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.6em;
+    margin-left: 2.4em;
+    margin-right: 2.4em;
+    margin-top: 1.4em;
+    text-align: center;
+    text-indent: 0
+    }
+.CR-BULL {
+    color: #999
+    }
+.Dialog-Ext {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 1.2em;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: -1.2em
+    }
+.Footnote-Text {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10%;
+    text-indent: 0
+    }
+.Internet-Post {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.3em;
+    text-indent: 0
+    }
+.MISC-Head {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.45em;
+    margin-left: 1.36em;
+    margin-right: 1.36em;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.PTEPI {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 0;
+    text-indent: 0
+    }
+.Post-Head {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.3em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.Privacy-Policy {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.45em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.Privacy-Policy-Text {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 3em;
+    margin-right: 1.36em;
+    margin-top: 0;
+    text-indent: -1.64em
+    }
+.Quiz-Head {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.Quiz-Text-Centered {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 2.4em;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.SCAP {
+    font-size: 0.55556em
+    }
+.SCAP1 {
+    font-size: 0.75em
+    }
+.TOCentry {
+    display: block;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.2;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: 1.5em
+    }
+.TOCentryBM {
+    display: block;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.2;
+    margin-bottom: 1.5em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-top: 1.5em;
+    text-indent: 1.5em
+    }
+.TOCentryP {
+    display: block;
+    font-size: 1.48148em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 1em;
+    text-indent: 0
+    }
+.Word-List {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 2.73em;
+    margin-right: 1.36em;
+    margin-top: 0;
+    text-indent: -1.36em
+    }
+.calibre {
+    -epub-hyphens: auto;
+    -webkit-hyphens: auto;
+    display: block;
+    font-size: 1.125em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.2;
+    margin-bottom: 0;
+    margin-left: 5pt;
+    margin-right: 5pt;
+    margin-top: 0;
+    padding-left: 0;
+    padding-right: 0
+    }
+.calibre1 {
+    font-style: italic
+    }
+.calibre2 {
+    line-height: 1.2
+    }
+.calibre3 {
+    font-weight: bold
+    }
+.calibre4 {
+    display: block
+    }
+.calibre5 {
+    display: block;
+    font-size: 1.125em;
+    line-height: 1.2;
+    margin-bottom: 0;
+    margin-left: 5pt;
+    margin-right: 5pt;
+    margin-top: 0;
+    padding-left: 0;
+    padding-right: 0
+    }
+.calibre6 {
+    display: block;
+    text-align: center
+    }
+.calibre7 {
+    height: 100%;
+    width: auto
+    }
+.crlogo {
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0.5em;
+    margin-left: 47%;
+    margin-right: 47%;
+    margin-top: 0.5em;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: center
+    }
+.epi-source {
+    font-size: 0.77778em
+    }
+.glyph {
+    height: 1em;
+    width: auto
+    }
+.w {
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    text-align: center;
+    width: 100%
+    }
+.w1 {
+    height: auto;
+    width: 100%
+    }
+.x01-FM-Copyright-Text {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.x01-FM-Copyright-Text-Space {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2.25em;
+    text-align: center;
+    text-indent: 0
+    }
+.x01-FM-Dedi-Body {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.8em;
+    text-align: center;
+    text-indent: 0
+    }
+.x02-Part-Epigraph-Source {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 6.67em;
+    margin-right: 6.67em;
+    margin-top: 0.67em;
+    text-align: right;
+    text-indent: 0
+    }
+.x02-Part-Number {
+    display: block;
+    font-size: 1.25926em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 2.64em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2.64em;
+    text-align: center;
+    text-indent: 0
+    }
+.x03-CO-Body-Text {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 4.36em;
+    text-indent: 0
+    }
+.x03-Chapter-Number {
+    display: block;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.x04-Body-Text {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: 1.36em
+    }
+.x04-Space-Break-FL {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x04-Space-Break-Orn {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 1.09em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.09em;
+    text-align: center;
+    text-indent: 0
+    }
+.x06-Computer-Font-1P {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x06-Computer-Font-Last {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 1.4em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x06-Computer-Font-Sub {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 1.2em;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x06-Extract-Head {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0.4em;
+    margin-left: 2.4em;
+    margin-right: 2.4em;
+    margin-top: 10.4em;
+    text-indent: 0
+    }
+.x06-Letter-Closing {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 1.67em;
+    margin-right: 1.67em;
+    margin-top: 0;
+    text-indent: 2.67em
+    }
+.x06-Letter-Headnote {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 1.67em;
+    margin-right: 1.67em;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.x06-Letter-Note-Extract {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.6em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-top: 1.6em;
+    text-indent: 0
+    }
+.x06-Letter-Note-Italic {
+    display: block;
+    font-size: 0.88889em;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 1.45em;
+    margin-left: 1.36em;
+    margin-right: 0;
+    margin-top: 1.45em;
+    text-indent: 0
+    }
+.x06-Letter-Salutation {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 1.67em;
+    margin-right: 1.67em;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x06-Letter-Text {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.78em;
+    margin-left: 1.67em;
+    margin-right: 1.67em;
+    margin-top: 1.78em;
+    text-indent: 0
+    }
+.x06-Letter-Text-First {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 1.67em;
+    margin-right: 1.67em;
+    margin-top: 1.78em;
+    text-indent: 0
+    }
+.x06-Letter-Text-Last {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.78em;
+    margin-left: 1.67em;
+    margin-right: 1.67em;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x07-List-Numbered-Sub-entry {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 1.36em;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: -1.36em
+    }
+.x07-List-Numbered-Sub-sub-entry {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 2.73em;
+    margin-right: 0;
+    margin-top: 0;
+    text-indent: -1.36em
+    }
+.x13-BM-Ack-Head {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 1.18em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.18em;
+    text-align: center;
+    text-indent: 0
+    }
+.x14-Newspaper-Headline {
+    display: block;
+    font-size: 0.88889em;
+    font-style: normal;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-left: 2.18em;
+    margin-right: 2.18em;
+    margin-top: 0;
+    text-align: center;
+    text-indent: 0
+    }
+.x14-Newspaper-Subhead {
+    display: block;
+    font-size: 0.66667em;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 6em;
+    margin-right: 1.67em;
+    margin-top: 0;
+    text-indent: 0
+    }
+.x14-Newspaper-Text {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 2.4em;
+    margin-right: 2.4em;
+    margin-top: 0;
+    text-indent: 1.2em
+    }
+.x14-Newspaper-Text-First {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-left: 2.4em;
+    margin-right: 2.4em;
+    margin-top: 1.8em;
+    text-indent: 0
+    }
+.x14-Newspaper-Text-Last {
+    display: block;
+    font-size: 0.66667em;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 1.4em;
+    margin-left: 2.4em;
+    margin-right: 2.4em;
+    margin-top: 0;
+    text-indent: 1.2em
+    }

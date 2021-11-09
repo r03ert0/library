@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:e3452d25-fc0f-493f-b6ad-d069596c3de6"/>
+    <meta name="dtb:depth" content="1"/>
+  </head>
+  <docTitle>
+    <text>Leviathan_Wakes</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="part1" playOrder="0">
+      <navLabel>
+        <text>Leviathan_Wakes</text>
+      </navLabel>
+      <content src="part1.xhtml"/>
+    </navPoint>
+    <navPoint id="part2" playOrder="1">
+      <navLabel>
+        <text>Copyright</text>
+      </navLabel>
+      <content src="part2.xhtml"/>
+    </navPoint>
+    <navPoint id="part3" playOrder="2">
+      <navLabel>
+        <text>Contents</text>
+      </navLabel>
+      <content src="part3.xhtml"/>
+    </navPoint>
+    <navPoint id="part4" playOrder="3">
+      <navLabel>
+        <text>Acknowledgments</text>
+      </navLabel>
+      <content src="part4.xhtml"/>
+    </navPoint>
+    <navPoint id="part5" playOrder="4">
+      <navLabel>
+        <text>BOOKS BY JAMES S. A. COREY</text>
+      </navLabel>
+      <content src="part5.xhtml"/>
+    </navPoint>
+    <navPoint id="part6" playOrder="5">
+      <navLabel>
+        <text>For Jayne and Kat, who encourage me t...</text>
+      </navLabel>
+      <content src="part6.xhtml"/>
+    </navPoint>
+    <navPoint id="part7" playOrder="6">
+      <navLabel>
+        <text>Prologue: Julie</text>
+      </navLabel>
+      <content src="part7.xhtml"/>
+    </navPoint>
+    <navPoint id="part8" playOrder="7">
+      <navLabel>
+        <text>â€œHelp me,â€� it said.</text>
+      </navLabel>
+      <content src="part8.xhtml"/>
+    </navPoint>
+    <navPoint id="part9" playOrder="8">
+      <navLabel>
+        <text>â€œLight freighter. Martian registry....</text>
+      </navLabel>
+      <content src="part9.xhtml"/>
+    </navPoint>
+    <navPoint id="part10" playOrder="9">
+      <navLabel>
+        <text>He tried to think about the Mao girl,...</text>
+      </navLabel>
+      <content src="part10.xhtml"/>
+    </navPoint>
+    <navPoint id="part11" playOrder="10">
+      <navLabel>
+        <text>â€œLike if it had a second signal tri...</text>
+      </navLabel>
+      <content src="part11.xhtml"/>
+    </navPoint>
+    <navPoint id="part12" playOrder="11">
+      <navLabel>
+        <text>Shaddid moved to one side, tapping he...</text>
+      </navLabel>
+      <content src="part12.xhtml"/>
+    </navPoint>
+    <navPoint id="part13" playOrder="12">
+      <navLabel>
+        <text>The radio was set to broadcast on ful...</text>
+      </navLabel>
+      <content src="part13.xhtml"/>
+    </navPoint>
+    <navPoint id="part14" playOrder="13">
+      <navLabel>
+        <text>â€œFriend,â€� he said. â€œYou are und...</text>
+      </navLabel>
+      <content src="part14.xhtml"/>
+    </navPoint>
+    <navPoint id="part15" playOrder="14">
+      <navLabel>
+        <text>â€œFast contacts with no transponder ...</text>
+      </navLabel>
+      <content src="part15.xhtml"/>
+    </navPoint>
+    <navPoint id="part16" playOrder="15">
+      <navLabel>
+        <text>Julie: Â  This is not a joke. This is...</text>
+      </navLabel>
+      <content src="part16.xhtml"/>
+    </navPoint>
+    <navPoint id="part17" playOrder="16">
+      <navLabel>
+        <text>â€œThose ships donâ€™t make any sense...</text>
+      </navLabel>
+      <content src="part17.xhtml"/>
+    </navPoint>
+    <navPoint id="part18" playOrder="17">
+      <navLabel>
+        <text>Havelock leaned back, lips pressed th...</text>
+      </navLabel>
+      <content src="part18.xhtml"/>
+    </navPoint>
+    <navPoint id="part19" playOrder="18">
+      <navLabel>
+        <text>â€œAnyone else think this is desperat...</text>
+      </navLabel>
+      <content src="part19.xhtml"/>
+    </navPoint>
+    <navPoint id="part20" playOrder="19">
+      <navLabel>
+        <text>â€œSure,â€� Havelock said.</text>
+      </navLabel>
+      <content src="part20.xhtml"/>
+    </navPoint>
+    <navPoint id="part21" playOrder="20">
+      <navLabel>
+        <text>Kelly pointed at them and looked at H...</text>
+      </navLabel>
+      <content src="part21.xhtml"/>
+    </navPoint>
+    <navPoint id="part22" playOrder="21">
+      <navLabel>
+        <text>â€œIâ€™m glad to hear you say that, D...</text>
+      </navLabel>
+      <content src="part22.xhtml"/>
+    </navPoint>
+    <navPoint id="part23" playOrder="22">
+      <navLabel>
+        <text>â€œA salvaged MCRN gunboat,â€� Holden...</text>
+      </navLabel>
+      <content src="part23.xhtml"/>
+    </navPoint>
+    <navPoint id="part24" playOrder="23">
+      <navLabel>
+        <text>â€œThere anyone who can take care of ...</text>
+      </navLabel>
+      <content src="part24.xhtml"/>
+    </navPoint>
+    <navPoint id="part25" playOrder="24">
+      <navLabel>
+        <text>â€œPut your suits on, thatâ€™s now st...</text>
+      </navLabel>
+      <content src="part25.xhtml"/>
+    </navPoint>
+    <navPoint id="part26" playOrder="25">
+      <navLabel>
+        <text>They were all that separated Ceres fr...</text>
+      </navLabel>
+      <content src="part26.xhtml"/>
+    </navPoint>
+    <navPoint id="part27" playOrder="26">
+      <navLabel>
+        <text>He remembered the old-timers from his...</text>
+      </navLabel>
+      <content src="part27.xhtml"/>
+    </navPoint>
+    <navPoint id="part28" playOrder="27">
+      <navLabel>
+        <text>â€œHey, partner,â€� Havelock said. â€...</text>
+      </navLabel>
+      <content src="part28.xhtml"/>
+    </navPoint>
+    <navPoint id="part29" playOrder="28">
+      <navLabel>
+        <text>â€œIâ€™ve been thinking about that. Y...</text>
+      </navLabel>
+      <content src="part29.xhtml"/>
+    </navPoint>
+    <navPoint id="part30" playOrder="29">
+      <navLabel>
+        <text>The architecture of Eros had changed ...</text>
+      </navLabel>
+      <content src="part30.xhtml"/>
+    </navPoint>
+    <navPoint id="part31" playOrder="30">
+      <navLabel>
+        <text>â€œCops donâ€™t carry small, easily c...</text>
+      </navLabel>
+      <content src="part31.xhtml"/>
+    </navPoint>
+    <navPoint id="part32" playOrder="31">
+      <navLabel>
+        <text>â€œItâ€™s bad, then?â€�</text>
+      </navLabel>
+      <content src="part32.xhtml"/>
+    </navPoint>
+    <navPoint id="part33" playOrder="32">
+      <navLabel>
+        <text>â€œYouâ€™ve got no idea,â€� Miller sa...</text>
+      </navLabel>
+      <content src="part33.xhtml"/>
+    </navPoint>
+    <navPoint id="part34" playOrder="33">
+      <navLabel>
+        <text>â€œOkay. Seriously, I think Miller th...</text>
+      </navLabel>
+      <content src="part34.xhtml"/>
+    </navPoint>
+    <navPoint id="part35" playOrder="34">
+      <navLabel>
+        <text>Miller knew him. A year and a half ag...</text>
+      </navLabel>
+      <content src="part35.xhtml"/>
+    </navPoint>
+    <navPoint id="part36" playOrder="35">
+      <navLabel>
+        <text>Miller shot him in the throat, right ...</text>
+      </navLabel>
+      <content src="part36.xhtml"/>
+    </navPoint>
+    <navPoint id="part37" playOrder="36">
+      <navLabel>
+        <text>In his mind, Julie Mao tilted her hea...</text>
+      </navLabel>
+      <content src="part37.xhtml"/>
+    </navPoint>
+    <navPoint id="part38" playOrder="37">
+      <navLabel>
+        <text>Miller shook his head, a sad but dist...</text>
+      </navLabel>
+      <content src="part38.xhtml"/>
+    </navPoint>
+    <navPoint id="part39" playOrder="38">
+      <navLabel>
+        <text>Itâ€™s"1em"t=">Itâ€™s possible I may ...</text>
+      </navLabel>
+      <content src="part39.xhtml"/>
+    </navPoint>
+    <navPoint id="part40" playOrder="39">
+      <navLabel>
+        <text>Miller nodded. â€œGot shot. Armâ€™s b...</text>
+      </navLabel>
+      <content src="part40.xhtml"/>
+    </navPoint>
+    <navPoint id="part41" playOrder="40">
+      <navLabel>
+        <text>â€œIâ€™ve killed people before, you k...</text>
+      </navLabel>
+      <content src="part41.xhtml"/>
+    </navPoint>
+    <navPoint id="part42" playOrder="41">
+      <navLabel>
+        <text>Miller sighed, nodded to himself, too...</text>
+      </navLabel>
+      <content src="part42.xhtml"/>
+    </navPoint>
+    <navPoint id="part43" playOrder="42">
+      <navLabel>
+        <text>â€œI urge you to consider the technic...</text>
+      </navLabel>
+      <content src="part43.xhtml"/>
+    </navPoint>
+    <navPoint id="part44" playOrder="43">
+      <navLabel>
+        <text>They were silent for a long moment. H...</text>
+      </navLabel>
+      <content src="part44.xhtml"/>
+    </navPoint>
+    <navPoint id="part45" playOrder="44">
+      <navLabel>
+        <text>â€œSo Mars finds out that maybe Earth...</text>
+      </navLabel>
+      <content src="part45.xhtml"/>
+    </navPoint>
+    <navPoint id="part46" playOrder="45">
+      <navLabel>
+        <text>Thatâ€™s what itâ€™s come to, Miller ...</text>
+      </navLabel>
+      <content src="part46.xhtml"/>
+    </navPoint>
+    <navPoint id="part47" playOrder="46">
+      <navLabel>
+        <text>â€œMiller,â€� the detective replied. ...</text>
+      </navLabel>
+      <content src="part47.xhtml"/>
+    </navPoint>
+    <navPoint id="part48" playOrder="47">
+      <navLabel>
+        <text>Leaving was a reminder of things heâ€...</text>
+      </navLabel>
+      <content src="part48.xhtml"/>
+    </navPoint>
+    <navPoint id="part49" playOrder="48">
+      <navLabel>
+        <text>The inside of the ship was filled wit...</text>
+      </navLabel>
+      <content src="part49.xhtml"/>
+    </navPoint>
+    <navPoint id="part50" playOrder="49">
+      <navLabel>
+        <text>â€œIâ€™d say youâ€™re responsible for...</text>
+      </navLabel>
+      <content src="part50.xhtml"/>
+    </navPoint>
+    <navPoint id="part51" playOrder="50">
+      <navLabel>
+        <text>The room was silent for a moment. Hol...</text>
+      </navLabel>
+      <content src="part51.xhtml"/>
+    </navPoint>
+    <navPoint id="part52" playOrder="51">
+      <navLabel>
+        <text>â€œYeah,â€� Miller said. â€œI like he...</text>
+      </navLabel>
+      <content src="part52.xhtml"/>
+    </navPoint>
+    <navPoint id="part53" playOrder="52">
+      <navLabel>
+        <text>â€œSheâ€™s not like us,â€� Amos said,...</text>
+      </navLabel>
+      <content src="part53.xhtml"/>
+    </navPoint>
+    <navPoint id="part54" playOrder="53">
+      <navLabel>
+        <text>â€œIâ€™ve fucked everything up,â€� Ho...</text>
+      </navLabel>
+      <content src="part54.xhtml"/>
+    </navPoint>
+    <navPoint id="part55" playOrder="54">
+      <navLabel>
+        <text>Fred chuckled.</text>
+      </navLabel>
+      <content src="part55.xhtml"/>
+    </navPoint>
+    <navPoint id="part56" playOrder="55">
+      <navLabel>
+        <text>â€œLook,â€� the detective said. â€œFa...</text>
+      </navLabel>
+      <content src="part56.xhtml"/>
+    </navPoint>
+    <navPoint id="part57" playOrder="56">
+      <navLabel>
+        <text>They better have, Miller thought. It ...</text>
+      </navLabel>
+      <content src="part57.xhtml"/>
+    </navPoint>
+    <navPoint id="part58" playOrder="57">
+      <navLabel>
+        <text>â€œIf that science ship starts flying...</text>
+      </navLabel>
+      <content src="part58.xhtml"/>
+    </navPoint>
+    <navPoint id="part59" playOrder="58">
+      <navLabel>
+        <text>If heâ€™d done the math right, the Na...</text>
+      </navLabel>
+      <content src="part59.xhtml"/>
+    </navPoint>
+    <navPoint id="part60" playOrder="59">
+      <navLabel>
+        <text>Get outrun by a rock and then watch t...</text>
+      </navLabel>
+      <content src="part60.xhtml"/>
+    </navPoint>
+    <navPoint id="part61" playOrder="60">
+      <navLabel>
+        <text>The service hatch had been tucked in ...</text>
+      </navLabel>
+      <content src="part61.xhtml"/>
+    </navPoint>
+    <navPoint id="part62" playOrder="61">
+      <navLabel>
+        <text>â€œAnd you still have the control cod...</text>
+      </navLabel>
+      <content src="part62.xhtml"/>
+    </navPoint>
+    <navPoint id="part63" playOrder="62">
+      <navLabel>
+        <text>The temperature was climbing faster n...</text>
+      </navLabel>
+      <content src="part63.xhtml"/>
+    </navPoint>
+    <navPoint id="part64" playOrder="63">
+      <navLabel>
+        <text>â€œWonâ€™t work. The minute UNN Comma...</text>
+      </navLabel>
+      <content src="part64.xhtml"/>
+    </navPoint>
+    <navPoint id="part65" playOrder="64">
+      <navLabel>
+        <text>His suit alarms shrieked at him when ...</text>
+      </navLabel>
+      <content src="part65.xhtml"/>
+    </navPoint>
+    <navPoint id="part66" playOrder="65">
+      <navLabel>
+        <text>â€œWell, someone tell McBride she doe...</text>
+      </navLabel>
+      <content src="part66.xhtml"/>
+    </navPoint>
+    <navPoint id="part67" playOrder="66">
+      <navLabel>
+        <text>Fred laughed. He couldnâ€™t help it.</text>
+      </navLabel>
+      <content src="part67.xhtml"/>
+    </navPoint>
+    <navPoint id="part68" playOrder="67">
+      <navLabel>
+        <text>â€œCaptain,â€� he said, â€œif youâ€™r...</text>
+      </navLabel>
+      <content src="part68.xhtml"/>
+    </navPoint>
+    <navPoint id="part69" playOrder="68">
+      <navLabel>
+        <text>â€œHe was kind of a pain in the ass, ...</text>
+      </navLabel>
+      <content src="part69.xhtml"/>
+    </navPoint>
+    <navPoint id="part70" playOrder="69">
+      <navLabel>
+        <text>Leviathan Wakes has a gritty and real...</text>
+      </navLabel>
+      <content src="part70.xhtml"/>
+    </navPoint>
+  </navMap>
+</ncx>
