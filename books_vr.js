@@ -91,20 +91,50 @@ export const openBook = ({title, path}) => {
 };
 window.openBook = openBook;
 
+const _bookCoverCanvas = (text, backgroundColor) => {
+  const txtcanvas = document.createElement("canvas");
+  txtcanvas.width = 300;
+  txtcanvas.height = 400;
+  const ctx = txtcanvas.getContext("2d");
+
+  ctx.fillStyle = backgroundColor;
+  ctx.fillRect(0, 0, txtcanvas.width, txtcanvas.height);
+
+  ctx.fillStyle = "rgba(255,255,255,1)";
+  ctx.font = "30px sans-serif";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  const {width} = ctx.measureText(text);
+  const nLines = Math.ceil(width/300);
+  const lineLength = Math.ceil(text.length/nLines);
+  for(let i=0;i<nLines;i++) {
+    ctx.fillText(text.slice(i*lineLength, (i+1)*lineLength).trim(), 5, 40+40*i);
+  }
+
+  return new CanvasTexture(txtcanvas);
+};
+
 export const displayBook = ({id, path, title, thumbnail, position, rotation, color}) => {
   const geometry = new BoxBufferGeometry(0.15, 0.2, 0.05);
   color = "#" + (Math.random() * 0xfffff * 1e6).toString(16).slice(0, 6);
-  // const material = new MeshBasicMaterial({color});
+
   let material;
   if (thumbnail) {
     const imgUrl = `${location.href}?mode=image&path=${escape(thumbnail)}`;
-    material = new THREE.MeshBasicMaterial({
+    material = new MeshBasicMaterial({
       map: loader.load(imgUrl),
       color: "#ffffff"
     });
   } else {
-    material = new MeshBasicMaterial({color});
+    // material = new MeshBasicMaterial({color});
+    material = new MeshBasicMaterial({
+      map: _bookCoverCanvas(title, color),
+      opacity: 1,
+      side: DoubleSide
+    })
+
   }
+
   const mesh = new Mesh(geometry, material);
   try {
     if (!position || typeof position === "undefined") {
@@ -183,7 +213,8 @@ const _selectedBookTextCanvas = (text) => {
   ctx.font = "40px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(text, 150, 30);
+  const {width} = ctx.measureText(text);
+  ctx.fillText(text, width*3/4, 30);
 
   return new CanvasTexture(txtcanvas);
 };
