@@ -84,8 +84,10 @@ const serveImage = (req, res) => {
   request.get(url).pipe(res);
 }
 const removeBook = async (req, res) => {
+  console.log("removeBook");
   const params = querystring.parse(req._parsedUrl.query);
   const result = await bookInfo.removeBook({path: params.path});
+  console.log(`  ${params.path}`);
   const resBody = { body: result };
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
@@ -94,7 +96,9 @@ const removeBook = async (req, res) => {
 };
 
 const methodGet = (req, res, next) => {
+  console.log("methodGet");
   const params = querystring.parse(req._parsedUrl.query);
+  console.log(params.books, params.mode, req._parsedUrl.query);
   if (params.books) {
     queryAllBooks(req, res);
   } else if (params.mode && params.mode === "read") {
