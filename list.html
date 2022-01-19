@@ -6,5 +6,13 @@
 </head>
 <body>
   <script src="list.js"></script>
+  <script>
+    const params = document.location.search.substring(1).split("&").map((o)=>o.split("="));
+    let order;
+    if(params.length && params[0][0] === "order") {
+      order = params[0][1];
+    }
+    init(order);
+  </script>
 </body>
 </html>
