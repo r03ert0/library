@@ -2173,8 +2173,11 @@ let validateFileURL;
 {
   const HOSTED_VIEWER_ORIGINS = [
     "null",
-    "https://192.168.1.48:8080",
-    "https://127.0.0.1:8080",
+    "https://darcy.local:8090",
+    "https://192.168.1.14:8090",
+    "https://192.168.1.48:8090",
+    "https://127.0.0.1:8090",
+    "https://localhost:8090",
     "http://mozilla.github.io",
     "https://mozilla.github.io"
   ];
