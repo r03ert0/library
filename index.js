@@ -1,3 +1,6 @@
+// index.js
+// client-side code
+
 import * as Books from "./books_vr.js";
 import * as Move from "./move.js";
 import * as Teleport from "./teleport.js";
@@ -304,9 +307,9 @@ const initThree = async () => {
   rightHandSelectStartFunctions.push( () => {
     if(Books.selectedBook) {
       const {userData: book} = Books.selectedBook;
-      const {title, path} = book;
-      console.log("open book:", title, path);
-      Books.openBook({title, path});
+      const {title, path, url} = book;
+      console.log("open book:", title, path, url);
+      Books.openBook({title, path, url});
 
       return true;
     }

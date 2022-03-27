@@ -1,3 +1,6 @@
+// books_vr.js
+// client-side code
+
 /* globals cameraRig */
 
 /*
@@ -85,9 +88,16 @@ export const updateDB = async (id, data) => {
 
 export const books = () => monk("find", []);
 
-export const openBook = ({title, path}) => {
+export const openBook = ({title, path, url}) => {
   console.log("open book:", title);
-  ws.send(`open ${JSON.stringify({type: "open", path: escape(path)})}`);
+  const obj = {type: "open"};
+  if(typeof path !== "undefined") {
+    obj.path = escape(path);
+  }
+  if(typeof url !== "undefined") {
+    obj.url = escape(url);
+  }
+  ws.send(`open ${JSON.stringify(obj)}`);
 };
 window.openBook = openBook;
 
@@ -114,7 +124,7 @@ const _bookCoverCanvas = (text, backgroundColor) => {
   return new CanvasTexture(txtcanvas);
 };
 
-export const displayBook = ({id, path, title, thumbnail, position, rotation, color}) => {
+export const displayBook = ({id, path, url, title, thumbnail, position, rotation, color}) => {
   const geometry = new BoxBufferGeometry(0.15, 0.2, 0.05);
   color = "#" + (Math.random() * 0xfffff * 1e6).toString(16).slice(0, 6);
 
@@ -149,6 +159,7 @@ export const displayBook = ({id, path, title, thumbnail, position, rotation, col
   }
   mesh.userData.name = title;
   mesh.userData.path = path;
+  mesh.userData.url = url;
   mesh.userData.color = color;
   mesh.userData.id = id;
   booksGroup.add(mesh);
@@ -158,8 +169,8 @@ const addBooks = async (scene) => {
   const arr = await books();
   booksGroup = new Group();
   window.booksGroup = booksGroup;
-  for (const {_id: id, path, title, thumbnail, position, rotation, color} of arr) {
-    displayBook({id, path, title, thumbnail, position, rotation, color});
+  for (const {_id: id, path, url, title, thumbnail, position, rotation, color} of arr) {
+    displayBook({id, path, url, title, thumbnail, position, rotation, color});
   }
   scene.add(booksGroup);
 

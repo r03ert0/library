@@ -1,18 +1,31 @@
+// list.js
+// client-side code
+
 let books;
 let bookcaseEl;
 
-const openBook = (path) => {
-    const bookUrl = location.href + `?mode=read&path=${escape(path)}`;
-    const viewerUrl = `/viewer.html?file=${bookUrl}`;
-    window.open(viewerUrl, '_blank');
+const openBook = (path, url) => {
+    let bookUrl;
+    if (path) {
+        bookUrl = location.href + `?mode=read&path=${escape(path)}`;
+        const viewerUrl = `/viewer.html?file=${bookUrl}`;
+        window.open(viewerUrl, '_blank');
+    }
+    if (url) {
+        bookUrl = location.href + `?mode=read&url=${escape(url)}`;
+        const viewerUrl = `/viewer.html?file=${bookUrl}`;
+        window.open(viewerUrl, '_blank');
+    }
 };
 
-const _displayQueryPanel = (el, title, authors, path) => {
+const _displayQueryPanel = (el, title, authors, path, url) => {
     const queryEl = document.createElement("div");
     queryEl.classList.add("query");
     queryEl.innerHTML = `
   <b>Path</b><br />
   <span>${path}</span><br />
+  <b>URL</b><br />
+  <span>${url}</span><br />
   <b>Title</b><br />
   <input id="title" type="text" value="${title}" /><br />
   <b>Authors</b><br />
@@ -26,13 +39,13 @@ const _displayQueryPanel = (el, title, authors, path) => {
         const newTitle = queryEl.querySelector("#title").value;
         const newAuthors = queryEl.querySelector("#authors").value;
         el.remove();
-        updateBook({ title: newTitle, authors: newAuthors, path });
+        updateBook({ title: newTitle, authors: newAuthors, path, url });
     });
     queryEl.appendChild(queryButton);
     el.appendChild(queryEl);
 };
 
-const _displayBookQueryResult = (el, json, path) => {
+const _displayBookQueryResult = (el, json, path, url) => {
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("content");
     el.appendChild(contentDiv);
@@ -73,6 +86,7 @@ const _displayBookQueryResult = (el, json, path) => {
         const item = json.items[selectedIndex];
         const book = {
             path,
+            url,
             title: item.volumeInfo.title,
             industryIdentifiers: item.volumeInfo.industryIdentifiers,
             authors: item.volumeInfo.authors,
@@ -109,36 +123,58 @@ const _displayEmptyQueryResult = (el) => {
     el.appendChild(buttonCancel);
 };
 
-const removeBook = async({ path }) => {
+const removeBook = async({ path, url }) => {
     // eslint-disable-next-line no-alert
-    const answer = confirm(`Confirm removal of ${path}`);
+    let answer;
+    if (path) {
+        answer = confirm(`Confirm removal of ${path}`);
+    } else if (url) {
+        answer = confirm(`Confirm removal of ${url}`);
+    }
     if (!answer) {
         return;
     }
-    const url = location.protocol + "//" + location.host + location.pathname + `?mode=remove&path=${escape(path)}`;
-    const res = await fetch(url);
+
+    let fetchUrl;
+    if (path) {
+        fetchUrl = location.protocol + "//" + location.host + location.pathname + `?mode=remove&path=${escape(path)}`;
+    } else if (url) {
+        fetchUrl = location.protocol + "//" + location.host + location.pathname + `?mode=remove&url=${escape(url)}`;
+    }
+    const res = await fetch(fetchUrl);
     console.log(res);
 };
 
 const importBook = () => {
-    const path = prompt("Enter book path");
-    if (!path) {
+    const pathOrUrl = prompt("Enter book path or url");
+    if (!pathOrUrl) {
         return;
     }
-    updateBook({
-        title: "",
-        authors: "",
-        path
-    });
+
+    const isUrl = (pathOrUrl.split(":")[0].slice(0, 4) === "http");
+
+    if (isUrl) {
+        updateBook({
+            title: "",
+            authors: "",
+            url: pathOrUrl
+        });
+    } else {
+        updateBook({
+            title: "",
+            authors: "",
+            path: pathOrUrl
+        });
+    }
 };
 
 
-const updateBook = async({ title, authors, path }) => {
+const updateBook = async({ title, authors, path, url }) => {
     const el = document.createElement("div");
     el.classList.add("update");
     document.querySelector("body").appendChild(el);
 
-    _displayQueryPanel(el, title, authors, path);
+    _displayQueryPanel(el, title, authors, path, url);
 
     let queryString = "https://www.googleapis.com/books/v1/volumes?maxResults=40&q=";
     if (title) {
@@ -151,7 +187,7 @@ const updateBook = async({ title, authors, path }) => {
     const res = await fetch(queryString);
     const json = await res.json(res);
     if (json && json.items) {
-        _displayBookQueryResult(el, json, path);
+        _displayBookQueryResult(el, json, path, url);
     } else {
         _displayEmptyQueryResult(el);
     }
@@ -226,10 +262,14 @@ const displayBooks = (order, filter) => {
         }
 
         if (book.path) {
-            el.innerHTML += `<p class="path">${book.path}</p>`;
+            el.innerHTML += `<p class="path">Path: ${book.path}</p>`;
         }
 
-        _addButton(el, "Open", () => { openBook(book.path); });
+        if (book.url) {
+            el.innerHTML += `<p class="path">URL: ${book.url}</p>`;
+        }
+
+        _addButton(el, "Open", () => { openBook(book.path, book.url); });
         _addButton(el, "Remove", () => { removeBook(book); });
         _addButton(el, "Update", () => { updateBook(book); });
 

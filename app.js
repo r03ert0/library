@@ -1,3 +1,6 @@
+// app.js
+// server-side code
+
 /* eslint-disable no-sync */
 const liveServer = require("live-server");
 const library = require("./library.js");
@@ -37,7 +40,6 @@ const wsmessage = (uid, event) => {
   const msg = event.data;
   const parts = msg.split(" ");
   const [key] = parts; // gets 1st element only
-  const val = parts.slice(1).join(" ");
 
   console.log("received message:", key);
 
@@ -50,6 +52,29 @@ const wsmessage = (uid, event) => {
     break;
   case "open":
     broadcast(parts[1]);
+    break;
+  case "info":
+    if(parts[1] === "url") {
+      const url = unescape(parts.slice(2).join(" "));
+      console.log({url});
+      db.get("library").findOne({url})
+      .then((result) => {
+        clients[uid].ws.send(JSON.stringify({type: "info", data: result}));
+      })
+    } else if(parts[1] === "path") {
+      const path = parts.slice(2).join(" ");
+      console.log(path);
+      db.get("library").findOne({path})
+      .then((result) => {
+        clients[uid].ws.send(JSON.stringify({type: "info", data: result}));
+      })
+    }
+    break;
+  case "bookmark":
+    const _id = parts[1];
+    const page = parts[2];
+    console.log("Bookmark", _id, page);
+    db.get("library").update({_id}, {$set: {bookmark: page}});
     break;
   case "monk": {
     const [, callbackId, fn, ...rest] = parts;

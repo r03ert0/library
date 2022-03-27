@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.23.0",
+    "bent": "^7.3.12",
     "finalhandler": "^1.1.2",
     "live-server": "github:r03ert0/live-server",
     "monk": "^7.3.4",
@@ -22,6 +23,8 @@
     "three": "^0.126.1"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
     "eslint-config-naat": "github:neuroanatomy/eslint-config-naat"
   }
 }

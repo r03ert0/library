@@ -1,3 +1,6 @@
+// teleport.js
+// client-side code
+
 /* eslint-disable no-unused-vars */
 /* global THREE */
 

@@ -1,3 +1,6 @@
+// move.js
+// client-side code
+
 /* global THREE */
 
 /*

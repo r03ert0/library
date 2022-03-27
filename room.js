@@ -1,3 +1,6 @@
+// room.js
+// client-side code
+
 import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 
 export const addRoom = async (scene) => {

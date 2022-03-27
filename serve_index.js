@@ -1,3 +1,6 @@
+// serve_index.js
+// server-side code
+
 var finalhandler = require('finalhandler');
 var http = require('http');
 var serveIndex = require('serve-index');

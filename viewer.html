@@ -18,12 +18,27 @@
         transform: translate( -50%, -50% );
         text-align: center;
       }
+      #tools {
+        display: none;
+        height: 32px;
+      }
+      #content {
+        width: 100%;
+        height: calc(100% - 32px);
+      }
     </style>
   </head>
   <body>
     <div id="waiting">
       <h2>Waiting for books</h2>
       <span style="font-size: 64px">📚</span>
+    </div>
+    <div id="tools">
+      <button onclick="setBookmark()">Set bookmark</button>
+      <button id="goToBookmark" onclick="goToBookmark()">Go to bookmark</button>
+      <button onclick="notes()">Notes</button>
+    </div>
+    <div id="content">
     </div>
     <script src="viewer.js"></script>
   </body>

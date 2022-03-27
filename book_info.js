@@ -1,3 +1,6 @@
+// book_info.js
+// server-side code
+
 const axios = require('axios');
 const monk = require('monk');
 const MONGO_DB = '127.0.0.1:27017/library';
@@ -33,16 +36,27 @@ const parseData = (data) => {
 
 /**
  * Get book information from the database
- * @param {object} query Object with `path` property containing the
- * path to the book pdf in the local file system
+ * @param {object} query Object with `path` or `url` property containing the
+ * path to the book pdf in the local file system or the url for a location
+ * in the web
  * @returns {object} The book entry in the database
  */
 const getBookInfoFromDB = async (query) => {
   const info = await new Promise((resolve, reject) => {
-    db.get("library").findOne({path: unescape(query.path)})
-      .then((res) => {
-        resolve(res);
-      });
+
+    if (query.path) {
+      db.get("library").findOne({path: unescape(query.path)})
+        .then((res) => {
+          resolve(res);
+        });
+    }
+
+    if (query.url) {
+      db.get("library").findOne({url: unescape(query.url)})
+        .then((res) => {
+          resolve(res);
+        });
+    }
   });
 
   return info;
@@ -117,7 +131,7 @@ const addBookToDB = (book) => new Promise((resolve, reject) => {
  * @returns {object} The book entry in the database
  */
 const getBookInfo = async (query) => {
-  if(typeof query.path === "undefined") {
+  if(typeof query.path === "undefined" && typeof query.url === "undefined") {
     // console.log("ERROR: Query does not contain path to book's pdf", query);
 
     return;
@@ -137,6 +151,7 @@ const getBookInfo = async (query) => {
   if (info) {
     // console.log("Book found in Google Books: adding.");
     info.path = unescape(query.path);
+    info.url = unescape(query.url);
     addBookToDB(info);
 
     return info;
@@ -162,6 +177,7 @@ const importBooks = async (list) => {
 
   for(const [i, book] of list.entries()) {
     console.log(`${i}. Book path: ${unescape(book.path)}`);
+    console.log(`${i}. Book url: ${unescape(book.url)}`);
     const info = await getBookInfo(book);
     if (info) {
       allBooksInfo.push(info);
@@ -193,16 +209,18 @@ const queryAllBooks = async () => {
  * @returns {void}
  */
 const updateBook = (book) => new Promise((resolve, reject) => {
-  if (!book.path) {
+  if (!book.path && !book.url) {
     reject(new Error("ERROR: No path provided"));
   }
 
   const query = {
-    path: unescape(book.path)
+    $or: [
+      {path: unescape(book.path)},
+      {url: unescape(book.url)}
+    ]
   };
 
   const update = {
-    path: unescape(book.path),
     title: book.title,
     authors: book.authors,
     industryIdentifiers: book.industryIdentifiers,
@@ -212,6 +230,14 @@ const updateBook = (book) => new Promise((resolve, reject) => {
     position: book.position,
     rotation: book.rotation
   };
+
+  if(book.path) {
+    update.path = unescape(book.path);
+  }
+
+  if(book.url) {
+    update.url = unescape(book.url);
+  }
 
   console.log("update");
   console.log(query);
@@ -227,12 +253,16 @@ const updateBook = (book) => new Promise((resolve, reject) => {
  * @returns {void}
  */
 const removeBook = (book) => new Promise((resolve, reject) => {
-  if (!book.path) {
-    reject(new Error("ERROR: No path provided"));
+  console.log("removeBook");
+  if (!book.path && !book.url) {
+    reject(new Error("ERROR: No path nor url provided"));
   }
 
   const query = {
-    path: unescape(book.path)
+    $or: [
+      {path: unescape(book.path)},
+      {url: unescape(book.url)}
+    ]
   };
 
   db.get("library").remove(query)

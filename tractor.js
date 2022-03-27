@@ -1,3 +1,6 @@
+// tractor.js
+// client-side code
+
 import {Box3, Vector3} from './node_modules/three/build/three.module.js';
 
 let tick = 0;
