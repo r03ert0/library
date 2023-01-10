@@ -1,14 +1,12 @@
-// room.js
-// client-side code
+import { GLTFLoader } from 'https://unpkg.com/three@0.136.0/examples/jsm/loaders/GLTFLoader.js?module';
 
-import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-
-export const addRoom = async (scene) => {
+export const addRoom = async ({scene, usePassthrough }) => {
   // room
   const loader = new GLTFLoader();
+  const roomPath = usePassthrough?'./assets/floor.glb':'./assets/room.glb';
 
   const floor = await new Promise((resolve) => {
-    loader.load('./assets/room.glb', ( gltf ) => {
+    loader.load(roomPath, ( gltf ) => {
       scene.add(gltf.scene);
       const res = gltf.scene.getObjectByName("floor");
       resolve(res);

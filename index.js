@@ -5,10 +5,12 @@ import * as Books from "./books_vr.js";
 import * as Move from "./move.js";
 import * as Teleport from "./teleport.js";
 import * as Tractor from "./tractor.js";
-import {OrbitControls} from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 import {VRButton} from './node_modules/three/examples/jsm/webxr/VRButton.js';
-import {XRControllerModelFactory} from './node_modules/three/examples/jsm/webxr/XRControllerModelFactory.js';
+import {ARButton} from './ARButton.js';
+import {OrbitControls} from 'https://unpkg.com/three@0.136.0/examples/jsm/controls/OrbitControls.js?module';
+import {XRControllerModelFactory} from 'https://unpkg.com/three@0.136.0/examples/jsm/webxr/XRControllerModelFactory.js?module';
 import {addRoom} from "./room.js";
+import * as planes from './planes.js';
 
 let camera, cameraRig, controls, renderer, scene;
 let controller1, controller2;
@@ -20,6 +22,9 @@ const intersectionFunctions = [];
 const updateFunctions = [];
 const rightHandSelectStartFunctions = [];
 const rightHandSelectEndFunctions = [];
+
+let useVR = true;
+let usePassthrough = true;
 
 THREE.Cache.enabled = false;
 
@@ -194,12 +199,18 @@ const updateTractor = () => {
   }
 };
 
-const loop = () => {
+const loop = (timestamp, frame) => {
   if (rightHand && leftHand) {
     if(Move.moving === false) {
       handleIntersections();
     }
     handleUpdates();
+  }
+
+  if (frame) {
+    planes.processAnchors(timestamp, frame);
+    planes.processPlanes(timestamp, frame);
+    planes.reticle.visible = true;
   }
 
   controls.update();
@@ -213,7 +224,10 @@ const initThree = async () => {
 
   // scene
   scene = new THREE.Scene();
-  scene.background = new THREE.Color( 0x7f7f7f );
+
+  if (!usePassthrough) {
+    scene.background = new THREE.Color( 0x7f7f7f );
+  }
 
   // camera rig
   cameraRig = new THREE.Group();
@@ -241,11 +255,22 @@ const initThree = async () => {
   controls.target = new THREE.Vector3( 0, 1, -1.8 );
   controls.update();
 
+  const sessionGrantedCallback = (session) => {
+    console.log({session});
+  }
+
   // VR button
-  document.body.appendChild(VRButton.createButton(renderer));
+  // document.body.appendChild(VRButton.createButton(renderer));
+  if (useVR) {
+    if (usePassthrough) {
+      document.body.appendChild(ARButton.createButton(renderer, sessionGrantedCallback));
+    } else {
+      document.body.appendChild(VRButton.createButton(renderer));
+    }
+  }
 
   // Room (room's floor is later used for teleportation)
-  const {floor} = await addRoom(scene);
+  const {floor} = await addRoom({scene, usePassthrough});
 
   // Books
   await Books.init(scene);
@@ -255,6 +280,10 @@ const initThree = async () => {
 
   // Teleport
   Teleport.init(scene, renderer, cameraRig);
+
+  // Room planes
+  planes.configure(THREE, scene, renderer);
+  scene.add(planes.reticle);
 
   /**
    * add controllers
